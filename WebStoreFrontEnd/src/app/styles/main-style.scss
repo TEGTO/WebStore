@@ -1,0 +1,42 @@
+@use '@angular/material' as mat;
+// @use 'colors' as colors;
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700|Lato:400,800,900");
+
+$light-theme: mat.define-light-theme((color: (primary: mat.define-palette(mat.$indigo-palette),
+                accent: mat.define-palette(mat.$green-palette),
+            ),
+        ));
+
+@include mat.core-color($light-theme);
+@include mat.button-color($light-theme);
+
+$family-sans-serif: "Nunito", sans-serif;
+$control-border-width: 2px;
+$input-border-color: transparent;
+$input-shadow: none;
+
+/*GLOBAL STYLES */
+html,
+body {
+    height: 100%;
+    overflow-x: hidden;
+}
+
+html {
+    // background-image: url("../assets/triangles.png");
+    background-size: cover;
+    background-attachment: fixed;
+    overflow-y: auto !important;
+}
+
+* {
+    font-family: 'Lato', sans-serif;
+}
+
+.material-icons {
+    transform: scale(1.2);
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    padding: 10px !important;
+}

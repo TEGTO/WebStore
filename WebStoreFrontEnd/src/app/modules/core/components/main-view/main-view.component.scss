@@ -1,0 +1,42 @@
+@use 'colors' as colors;
+@use 'global-styles' as gs;
+
+.header {
+
+    .toolbar {
+        font-size: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 0 2rem 0 2rem;
+
+        .toolbar-right-buttons {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: .5rem;
+        }
+
+        .cart-button {
+
+            .items-in-cart-amount {
+                position: absolute;
+                min-width: 20px;
+                height: 20px;
+                background: colors.$global-green;
+                right: 0;
+                top: 0;
+                transform: translate(-20%, 10%);
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                padding-left: gs.$global-spacer;
+                padding-right: gs.$global-spacer;
+                border-radius: 50px;
+                font-size: 14px;
+                color: #fff;
+            }
+        }
+    }
+}
