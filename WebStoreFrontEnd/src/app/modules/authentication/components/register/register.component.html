@@ -8,17 +8,17 @@
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email" placeholder="example@example.com">
-            @if (register.hasError('email') && !register.hasError('required')) {
+            @if (emailInput.hasError('email') && !emailInput.hasError('required')) {
             <mat-error>Please enter a valid email address</mat-error>
             }
-            @if (register.hasError('required')) {
+            @if (emailInput.hasError('required')) {
             <mat-error>Email is <strong>required</strong></mat-error>
             }
         </mat-form-field>
         <mat-form-field>
             <mat-label>Password</mat-label>
             <input [type]="hidePassword ? 'password' : 'text'" matInput formControlName="password">
-            <span class="material-icons" matSuffix (click)="hidePassword = !hidePassword">
+            <span class="material-icons me-2" matSuffix (click)="hidePassword = !hidePassword">
                 {{hidePassword
                 ? 'visibility_off'
                 : 'visibility'
@@ -27,8 +27,24 @@
             @if (passwordInput.hasError('required')) {
             <mat-error>Password is <strong>required</strong></mat-error>
             }
-            @if (passwordInput.hasError('min')) {
+            @if (passwordInput.hasError('minlength')) {
             <mat-error>Password must be <strong>at least 8</strong> characters</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Confirm Password</mat-label>
+            <input [type]="hidePassword ? 'password' : 'text'" matInput formControlName="passwordConfirm">
+            <span class="material-icons me-2" matSuffix (click)="hidePasswordConfirm = !hidePasswordConfirm">
+                {{hidePasswordConfirm
+                ? 'visibility_off'
+                : 'visibility'
+                }}
+            </span>
+            @if (passwordConfirmInput.hasError('required')) {
+            <mat-error><strong>Confirm password.</strong></mat-error>
+            }
+            @if (passwordConfirmInput.hasError('passwordNoMatch')) {
+            <mat-error><strong>Passwords don't match.</strong></mat-error>
             }
         </mat-form-field>
     </form>

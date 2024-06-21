@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { confirmPasswordValidator } from '../../index';
 import { RegisterComponent } from '../register/register.component';
 
 @Component({
@@ -13,14 +12,12 @@ export class LoginComponent {
   login: FormGroup = new FormGroup(
     {
       email: new FormControl('', [Validators.email, Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.min(8)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       passwordConfirm: new FormControl('', [Validators.required]),
-    },
-    {
-      validators: confirmPasswordValidator
     });
 
   hidePassword: boolean = true;
+  isInvalidData: boolean = false;
 
   get emailInput() { return this.login.get('email')!; }
   get passwordInput() { return this.login.get('password')!; }
@@ -29,7 +26,7 @@ export class LoginComponent {
 
   openRegisterMenu() {
     const dialogRef = this.dialog.open(RegisterComponent, {
-      height: '600px',
+      height: '430px',
       width: '450px',
     });
   }

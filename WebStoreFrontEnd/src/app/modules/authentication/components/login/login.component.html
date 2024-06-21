@@ -18,7 +18,7 @@
         <mat-form-field>
             <mat-label>Password</mat-label>
             <input [type]="hidePassword ? 'password' : 'text'" matInput formControlName="password">
-            <span class="material-icons" matSuffix (click)="hidePassword = !hidePassword">
+            <span class="material-icons me-2" matSuffix (click)="hidePassword = !hidePassword">
                 {{hidePassword
                 ? 'visibility_off'
                 : 'visibility'
@@ -27,15 +27,16 @@
             @if (passwordInput.hasError('required')) {
             <mat-error>Password is <strong>required</strong></mat-error>
             }
-            @if (passwordInput.hasError('min')) {
+            @if (passwordInput.hasError('minlength')) {
             <mat-error>Password must be <strong>at least 8</strong> characters</mat-error>
             }
         </mat-form-field>
+        <mat-error *ngIf="isInvalidData">Email or password is invalid.</mat-error>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions class="send-button-container">
-    <a class="primary-color" (click)="openRegisterMenu()" mat-dialog-close>
+    <button mat-flat-button id="send-button" color="primary">Login</button>
+    <a id="to-register-link" (click)="openRegisterMenu()" mat-dialog-close>
         Don't have an account? Create a new one.
     </a>
-    <button mat-flat-button id="send-button" color="primary">Login</button>
 </mat-dialog-actions>

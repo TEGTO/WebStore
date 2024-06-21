@@ -19,7 +19,8 @@
         width: 100%;
     }
 
-    .primary-color {
+    #to-register-link {
         color: colors.$link-light-blue;
+        cursor: pointer;
     }
 }

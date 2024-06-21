@@ -40,3 +40,7 @@ html {
 .mat-mdc-dialog-container .mdc-dialog__surface {
     padding: 10px !important;
 }
+
+.mat-mdc-dialog-container .mat-mdc-dialog-title+.mat-mdc-dialog-content {
+    overflow-y: hidden !important;
+}
