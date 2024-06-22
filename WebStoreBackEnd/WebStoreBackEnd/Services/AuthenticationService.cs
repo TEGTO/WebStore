@@ -29,6 +29,7 @@ namespace WebStoreBackEnd.Services
                 else
                 {
                     await dbContext.AddAsync(new User { Email = model.Email, Password = model.Password });
+                    await dbContext.SaveChangesAsync();
                 }
             }
         }

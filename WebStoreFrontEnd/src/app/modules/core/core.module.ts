@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationModule } from '../authentication/authentication.module';
+import { CustomErrorHandler, ErrorHandlerService, URLDefiner, URLDefinerService } from '../shared';
 import { AppComponent, MainViewComponent } from './index';
 
 const routes: Routes = [
@@ -30,6 +31,10 @@ const routes: Routes = [
     MatButtonModule,
     MatDialogModule,
     AuthenticationModule
+  ],
+  providers: [
+    { provide: URLDefiner, useClass: URLDefinerService },
+    { provide: CustomErrorHandler, useClass: ErrorHandlerService },
   ],
   bootstrap: [AppComponent]
 })
