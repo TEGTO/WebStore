@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using WebStoreBackEnd.Models;
@@ -23,6 +25,15 @@ namespace WebStoreBackEnd.Controllers
             this.mapper = mapper;
         }
 
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] AuthenticationModelDto authModel, CancellationToken cancellationToken)
+        {
+            if (authModel == null)
+                return BadRequest("Invalid client request");
+            var model = mapper.Map<AuthenticationModel>(authModel);
+            await authenticationService.RegisterNewModelAsync(model, cancellationToken);
+            return Ok();
+        }
         [HttpPost("login")]
         public async Task<ActionResult<AccessToken>> Login([FromBody] AuthenticationModelDto loginModel, CancellationToken cancellationToken)
         {
@@ -45,7 +56,6 @@ namespace WebStoreBackEnd.Controllers
             }
             return Unauthorized();
         }
-
         private async Task<bool> CheckAuthenticationModelAsync(AuthenticationModelDto loginModel, CancellationToken cancellationToken)
         {
             var model = mapper.Map<AuthenticationModel>(loginModel);
