@@ -5,5 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export abstract class CustomErrorHandler {
 
-  abstract handleError(error: Error): void;
+  abstract handleError(error: any): void;
 }

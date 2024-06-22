@@ -4,7 +4,7 @@
 <h2 mat-dialog-title>Create Account</h2>
 
 <mat-dialog-content>
-    <form class="form-full-width" [formGroup]="register">
+    <form id="registrationForm" [formGroup]="register" (ngSubmit)="registerUser()" class="form-full-width">
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email" placeholder="example@example.com">
@@ -34,12 +34,6 @@
         <mat-form-field>
             <mat-label>Confirm Password</mat-label>
             <input [type]="hidePassword ? 'password' : 'text'" matInput formControlName="passwordConfirm">
-            <span class="material-icons me-2" matSuffix (click)="hidePasswordConfirm = !hidePasswordConfirm">
-                {{hidePasswordConfirm
-                ? 'visibility_off'
-                : 'visibility'
-                }}
-            </span>
             @if (passwordConfirmInput.hasError('required')) {
             <mat-error><strong>Confirm password.</strong></mat-error>
             }
@@ -47,8 +41,9 @@
             <mat-error><strong>Passwords don't match.</strong></mat-error>
             }
         </mat-form-field>
+        <mat-error>{{registerErrors}}</mat-error>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions class="send-button-container">
-    <button mat-flat-button id="send-button" color="primary">Create</button>
+    <button mat-flat-button form="registrationForm" type="submit" id="send-button" color="primary">Create</button>
 </mat-dialog-actions>

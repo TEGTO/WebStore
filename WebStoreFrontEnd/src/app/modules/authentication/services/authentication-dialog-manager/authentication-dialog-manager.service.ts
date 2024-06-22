@@ -7,7 +7,7 @@ import { AuthenticationDialogManager } from './authentication-dialog-manager';
   providedIn: 'root'
 })
 export class AuthenticationDialogManagerService implements AuthenticationDialogManager {
-  isAuthenticated: boolean = true;
+  isAuthenticated: boolean = false;
 
   constructor(private dialog: MatDialog) { }
 

@@ -1,16 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace WebStoreBackEnd.Models
 {
-    public class User
+    public class User : IdentityUser
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string Id { get; set; } = default!;
-        [MaxLength(255), Required]
-        public string Email { get; set; } = null!;
-        [MaxLength(255), Required]
-        public string Password { get; set; } = null!;
     }
 }

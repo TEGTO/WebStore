@@ -1,14 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using WebStoreBackEnd.Models;
 
 namespace WebStoreBackEnd.Data
 {
-    public class WebStoreDbContext : DbContext
+    public class WebStoreDbContext : IdentityDbContext<User>
     {
-        public DbSet<User> Users { get; set; }
-
-        public WebStoreDbContext(DbContextOptions<WebStoreDbContext> options) : base(options)
+        public WebStoreDbContext(DbContextOptions options) : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
         }
     }
 }

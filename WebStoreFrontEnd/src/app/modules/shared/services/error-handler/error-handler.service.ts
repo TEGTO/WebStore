@@ -6,7 +6,7 @@ import { CustomErrorHandler } from './custom-error-handler';
 })
 export class ErrorHandlerService extends CustomErrorHandler {
 
-  override handleError(error: Error): void {
-    console.log(error.message);
+  override handleError(error: any): void {
+    console.log(error.Messages);
   }
 }
