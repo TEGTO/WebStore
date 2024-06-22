@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { LoginComponent } from '../../../authentication';
+import { AuthenticationDialogManager } from '../../../authentication';
 
 @Component({
   selector: 'app-main-view',
@@ -11,15 +10,12 @@ export class MainViewComponent {
   isAuthenticated: boolean = false;
   itemsInCartAmount: number = 0;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private authDialogManager: AuthenticationDialogManager) { }
 
   increaseItemsInCartAmount() {
     this.itemsInCartAmount++;
   }
   openLoginMenu() {
-    const dialogRef = this.dialog.open(LoginComponent, {
-      height: '345px',
-      width: '450px',
-    });
+    const dialogRef = this.authDialogManager.openLoginMenu();
   }
 }

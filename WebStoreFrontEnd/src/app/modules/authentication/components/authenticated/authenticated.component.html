@@ -1,0 +1,40 @@
+<button mat-icon-button mat-dialog-close class="close-button">
+    <span class="material-icons">close</span>
+</button>
+<h2 mat-dialog-title>Edit Account</h2>
+
+<mat-dialog-content>
+    <form class="form-full-width" [formGroup]="register">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input type="email" matInput formControlName="email" placeholder="example@example.com">
+            @if (emailInput.hasError('email') && !emailInput.hasError('required')) {
+            <mat-error>Please enter a valid email address</mat-error>
+            }
+            @if (emailInput.hasError('required')) {
+            <mat-error>Email is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Old Password</mat-label>
+            <input [type]="'password'" matInput formControlName="oldPassword">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>New Password</mat-label>
+            <input [type]="hideNewPassword ? 'password' : 'text'" matInput formControlName="newPassword">
+            <span class="material-icons me-2" matSuffix (click)="hideNewPassword = !hideNewPassword">
+                {{hideNewPassword
+                ? 'visibility_off'
+                : 'visibility'
+                }}
+            </span>
+            @if (newPassword.hasError('minlength')) {
+            <mat-error>Password must be <strong>at least 8</strong> characters</mat-error>
+            }
+        </mat-form-field>
+    </form>
+    <mat-error *ngIf="isInvalidPassword">Invalid password.</mat-error>
+</mat-dialog-content>
+<mat-dialog-actions class="send-button-container">
+    <button mat-flat-button id="send-button" color="primary">Save</button>
+</mat-dialog-actions>

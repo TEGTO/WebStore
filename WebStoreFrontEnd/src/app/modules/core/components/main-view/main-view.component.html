@@ -6,7 +6,10 @@
                 <button mat-icon-button (click)="openLoginMenu()">
                     <span class="material-icons">person</span>
                 </button>
-                <button mat-icon-button class="cart-button" (click)="increaseItemsInCartAmount()">
+                <button mat-icon-button class="cart-button" (click)="
+                    isAuthenticated
+                    ? increaseItemsInCartAmount() 
+                    : openLoginMenu() ">
                     <span class="material-icons">shopping_cart</span>
                     <span class="items-in-cart-amount" *ngIf="itemsInCartAmount > 0">{{itemsInCartAmount}}</span>
                 </button>

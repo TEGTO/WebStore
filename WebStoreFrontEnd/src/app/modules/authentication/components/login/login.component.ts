@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { RegisterComponent } from '../register/register.component';
+import { AuthenticationDialogManager } from '../../index';
 
 @Component({
   selector: 'app-login',
@@ -22,12 +21,9 @@ export class LoginComponent {
   get emailInput() { return this.login.get('email')!; }
   get passwordInput() { return this.login.get('password')!; }
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private authDialogManager: AuthenticationDialogManager) { }
 
   openRegisterMenu() {
-    const dialogRef = this.dialog.open(RegisterComponent, {
-      height: '430px',
-      width: '450px',
-    });
+    const dialogRef = this.authDialogManager.openRegisterMenu();
   }
 }

@@ -5,10 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { LoginComponent, RegisterComponent } from "./index";
+import { AuthenticationDialogManager, AuthenticationDialogManagerService, LoginComponent, RegisterComponent } from "./index";
+import { AuthenticatedComponent } from './components/authenticated/authenticated.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent],
+  declarations: [LoginComponent, RegisterComponent, AuthenticatedComponent],
   imports: [
     CommonModule,
     MatDialogModule,
@@ -17,6 +18,9 @@ import { LoginComponent, RegisterComponent } from "./index";
     MatFormFieldModule,
     ReactiveFormsModule,
     MatButtonModule,
+  ],
+  providers: [
+    { provide: AuthenticationDialogManager, useClass: AuthenticationDialogManagerService },
   ],
   exports: [LoginComponent],
 })
