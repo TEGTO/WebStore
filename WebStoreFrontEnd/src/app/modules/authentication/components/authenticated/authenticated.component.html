@@ -4,7 +4,7 @@
 <h2 mat-dialog-title>Edit Account</h2>
 
 <mat-dialog-content>
-    <form class="form-full-width" [formGroup]="register">
+    <form id="updateForm" [formGroup]="formGroup" class="form-full-width">
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email" placeholder="example@example.com">
@@ -18,6 +18,9 @@
         <mat-form-field>
             <mat-label>Old Password</mat-label>
             <input [type]="'password'" matInput formControlName="oldPassword">
+            @if (oldPassword.hasError('required')) {
+            <mat-error>Old Password is <strong>required</strong></mat-error>
+            }
         </mat-form-field>
         <mat-form-field>
             <mat-label>New Password</mat-label>
@@ -33,8 +36,11 @@
             }
         </mat-form-field>
     </form>
-    <mat-error *ngIf="isInvalidPassword">Invalid password.</mat-error>
+    <div class="success-message text-teal-700" *ngIf="isUpdateSuccessful">Update successful!</div>
+    <mat-error *ngFor="let error of updateErrors">{{error}}</mat-error>
 </mat-dialog-content>
-<mat-dialog-actions class="send-button-container">
-    <button mat-flat-button id="send-button" color="primary">Save</button>
+<mat-dialog-actions class="bottom-buttons-container">
+    <button mat-flat-button id="send-button" type="submit" form="updateForm" color="primary"
+        (click)="updateUser()">Save</button>
+    <button mat-flat-button mat-dialog-close id="logout-button" color="warn" (click)="logOutUser()">Log Out</button>
 </mat-dialog-actions>

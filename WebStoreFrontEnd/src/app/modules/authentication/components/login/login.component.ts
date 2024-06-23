@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationDialogManager } from '../../index';
+import { MatDialogRef } from '@angular/material/dialog';
+import { UserAuthenticationDto } from '../../../shared';
+import { AuthenticationDialogManager, AuthenticationService, RegisterComponent } from '../../index';
 
 @Component({
   selector: 'app-login',
@@ -8,22 +10,36 @@ import { AuthenticationDialogManager } from '../../index';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  login: FormGroup = new FormGroup(
+  formGroup: FormGroup = new FormGroup(
     {
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      passwordConfirm: new FormControl('', [Validators.required]),
     });
-
   hidePassword: boolean = true;
-  isInvalidData: boolean = false;
+  isLoginFailed: boolean = false;
 
-  get emailInput() { return this.login.get('email')!; }
-  get passwordInput() { return this.login.get('password')!; }
+  get emailInput() { return this.formGroup.get('email')!; }
+  get passwordInput() { return this.formGroup.get('password')!; }
 
-  constructor(private authDialogManager: AuthenticationDialogManager) { }
+  constructor(private authDialogManager: AuthenticationDialogManager,
+    private authService: AuthenticationService, private dialogRef: MatDialogRef<RegisterComponent>) { }
 
   openRegisterMenu() {
     const dialogRef = this.authDialogManager.openRegisterMenu();
+  }
+  signInUser() {
+    if (this.formGroup.valid) {
+      const formValues = { ...this.formGroup.value };
+      const userData: UserAuthenticationDto = {
+        email: formValues.email,
+        password: formValues.password,
+      };
+      this.authService.singInUser(userData).subscribe(authData => {
+        if (authData.isAuthenticated) {
+          this.dialogRef.close();
+        }
+        this.isLoginFailed = !authData.isAuthenticated;
+      });
+    }
   }
 }

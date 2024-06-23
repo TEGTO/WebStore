@@ -1,9 +1,8 @@
 ﻿namespace WebStoreBackEnd.Models.Dto
 {
-    public class UserRegistrationlDto
+    public class UserAuthenticationDto
     {
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public string? ConfirmPassword { get; set; }
     }
 }

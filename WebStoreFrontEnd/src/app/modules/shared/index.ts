@@ -1,4 +1,7 @@
+export * from "./models/dto/authResponseDto"
+export * from "./models/dto/userAuthenticationDto"
 export * from "./models/dto/userRegistrationDto"
+export * from "./models/dto/userUpdateDataDto"
 export * from "./services/api/authentication-api/authentication-api.service"
 export * from "./services/error-handler/custom-error-handler"
 export * from "./services/error-handler/error-handler.service"

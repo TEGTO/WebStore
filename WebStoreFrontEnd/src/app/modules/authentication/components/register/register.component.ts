@@ -10,41 +10,39 @@ import { UserRegistrationDto } from '../../../shared';
   styleUrl: './register.component.scss'
 })
 export class RegisterComponent {
-  register: FormGroup = new FormGroup(
+  formGroup: FormGroup = new FormGroup(
     {
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(8)]),
       passwordConfirm: new FormControl('', [Validators.required, confirmPasswordValidator])
     });
   hidePassword: boolean = true;
-  registerErrors: any;
+  registerErrors: string[] = [];
 
-  get emailInput() { return this.register.get('email')!; }
-  get passwordInput() { return this.register.get('password')!; }
-  get passwordConfirmInput() { return this.register.get('passwordConfirm')!; }
+  get emailInput() { return this.formGroup.get('email')!; }
+  get passwordInput() { return this.formGroup.get('password')!; }
+  get passwordConfirmInput() { return this.formGroup.get('passwordConfirm')!; }
 
   constructor(private authService: AuthenticationService, private dialogRef: MatDialogRef<RegisterComponent>) { }
 
   registerUser() {
-    if (this.register.valid) {
-      const formValues = { ...this.register.value };
-      const user: UserRegistrationDto = {
+    if (this.formGroup.valid) {
+      const formValues = { ...this.formGroup.value };
+      const userData: UserRegistrationDto = {
         email: formValues.email,
         password: formValues.password,
         confirmPassword: formValues.passwordConfirm
       };
-      this.authService.registerUser(user).subscribe(isSuccess => {
+      this.authService.registerUser(userData).subscribe(isSuccess => {
         if (isSuccess) {
           this.dialogRef.close();
         }
         else {
           this.authService.registerUserGetErrors().subscribe(errors => {
-            this.registerErrors = errors;
+            if (errors)
+              this.registerErrors = errors.split("\n");
           })
         }
-        this.authService.registerUserGetErrors().subscribe(errors => {
-          this.registerErrors = errors;
-        })
       });
     }
   }

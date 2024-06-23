@@ -30,7 +30,7 @@ namespace WebStoreBackEnd.Middleware
                  .ToArray();
                 var responseError = new ResponseError
                 {
-                    StatusCode = httpContext.Response.StatusCode.ToString(),
+                    StatusCode = $"{(int)HttpStatusCode.BadRequest}",
                     Messages = errors
                 };
                 logger.LogError(ex, responseError.ToString());

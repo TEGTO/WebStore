@@ -3,9 +3,9 @@ using WebStoreBackEnd.Models.Dto;
 
 namespace WebStoreBackEnd.Validators
 {
-    public class UserForRegistrationlDtoValidator : AbstractValidator<UserRegistrationlDto>
+    public class UserRegistrationDtoValidator : AbstractValidator<UserRegistrationDto>
     {
-        public UserForRegistrationlDtoValidator()
+        public UserRegistrationDtoValidator()
         {
             RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress();
             RuleFor(x => x.Password).NotNull().NotEmpty().MinimumLength(8);

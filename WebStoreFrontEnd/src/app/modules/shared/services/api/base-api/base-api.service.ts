@@ -21,6 +21,6 @@ export class BaseApiService {
   }
   protected handleError(error: any) {
     this.errorHandler.handleError(error);
-    return throwError(() => new Error(error.Messages));
+    return throwError(() => new Error(error.messages.join('\n')));
   }
 }

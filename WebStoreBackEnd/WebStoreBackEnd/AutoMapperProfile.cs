@@ -8,8 +8,8 @@ namespace HorseBets
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserRegistrationlDto>();
-            CreateMap<UserRegistrationlDto, User>().ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            CreateMap<User, UserRegistrationDto>();
+            CreateMap<UserRegistrationDto, User>().ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
         }
     }
 }

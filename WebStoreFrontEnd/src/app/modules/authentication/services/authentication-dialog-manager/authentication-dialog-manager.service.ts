@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { AuthenticatedComponent, LoginComponent, RegisterComponent } from '../../index';
+import { AuthenticatedComponent, AuthenticationService, LoginComponent, RegisterComponent } from '../..';
 import { AuthenticationDialogManager } from './authentication-dialog-manager';
 
 @Injectable({
@@ -9,13 +9,17 @@ import { AuthenticationDialogManager } from './authentication-dialog-manager';
 export class AuthenticationDialogManagerService implements AuthenticationDialogManager {
   isAuthenticated: boolean = false;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private authService: AuthenticationService, private dialog: MatDialog) {
+    this.authService.getAuthUserData().subscribe(data => {
+      this.isAuthenticated = data.isAuthenticated;
+    })
+  }
 
   openLoginMenu(): MatDialogRef<any, any> {
     var dialogRef: MatDialogRef<any, any>;
     if (this.isAuthenticated) {
       dialogRef = this.dialog.open(AuthenticatedComponent, {
-        height: '430px',
+        height: '450px',
         width: '450px',
       });
     }
@@ -28,7 +32,6 @@ export class AuthenticationDialogManagerService implements AuthenticationDialogM
     return dialogRef;
   }
   openRegisterMenu(): MatDialogRef<any, any> {
-    var component = this.isAuthenticated ? AuthenticatedComponent : RegisterComponent;
     const dialogRef = this.dialog.open(RegisterComponent, {
       height: '430px',
       width: '450px',

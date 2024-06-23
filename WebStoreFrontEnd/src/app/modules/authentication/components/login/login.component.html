@@ -4,7 +4,7 @@
 <h2 mat-dialog-title>Login</h2>
 
 <mat-dialog-content>
-    <form class="form-full-width" [formGroup]="login">
+    <form id="loginForm" class="form-full-width" [formGroup]="formGroup" (ngSubmit)="signInUser()">
         <mat-form-field>
             <mat-label>Email</mat-label>
             <input type="email" matInput formControlName="email" placeholder="example@example.com">
@@ -31,11 +31,11 @@
             <mat-error>Password must be <strong>at least 8</strong> characters</mat-error>
             }
         </mat-form-field>
-        <mat-error *ngIf="isInvalidData">Email or password is invalid.</mat-error>
+        <mat-error *ngIf="isLoginFailed">Email or password is invalid.</mat-error>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions class="send-button-container">
-    <button mat-flat-button id="send-button" color="primary">Login</button>
+    <button mat-flat-button id="send-button" form="loginForm" type="submit" color="primary">Login</button>
     <a id="to-register-link" (click)="openRegisterMenu()" mat-dialog-close>
         Don't have an account? Create a new one.
     </a>
