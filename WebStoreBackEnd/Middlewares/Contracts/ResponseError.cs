@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace ApiGateway.Contracts
+namespace Middlewares.Contracts
 {
     public class ResponseError
     {

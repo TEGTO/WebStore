@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace WebStoreBackEnd.Models
+namespace AuthenticationWebApi.Models
 {
     public class User : IdentityUser
     {

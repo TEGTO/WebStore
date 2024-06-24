@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
-using WebStoreBackEnd.Models.Dto;
+using AuthenticationWebApi.Models.Dto;
 
-namespace WebStoreBackEnd.Validators
+namespace AuthenticationWebApi.Validators
 {
     public class UserRegistrationDtoValidator : AbstractValidator<UserRegistrationDto>
     {

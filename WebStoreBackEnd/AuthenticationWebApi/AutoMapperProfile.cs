@@ -1,8 +1,8 @@
-﻿using AutoMapper;
-using WebStoreBackEnd.Models;
-using WebStoreBackEnd.Models.Dto;
+﻿using AuthenticationWebApi.Models;
+using AuthenticationWebApi.Models.Dto;
+using AutoMapper;
 
-namespace HorseBets
+namespace AuthenticationWebApi
 {
     public class AutoMapperProfile : Profile
     {

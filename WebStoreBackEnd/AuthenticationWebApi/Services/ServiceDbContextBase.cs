@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebStoreBackEnd.Data;
+using AuthenticationWebApi.Data;
 
-namespace WebStoreBackEnd.Services
+namespace AuthenticationWebApi.Services
 {
     public class ServiceDbContextBase
     {

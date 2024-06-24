@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WebStoreBackEnd.Models;
+using AuthenticationWebApi.Models;
 
-namespace WebStoreBackEnd.Data
+namespace AuthenticationWebApi.Data
 {
     public class WebStoreDbContext : IdentityDbContext<User>
     {

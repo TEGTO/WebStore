@@ -1,8 +1,11 @@
-﻿using ApiGateway.Contracts;
-using FluentValidation;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Middlewares.Contracts;
 using System.Net;
 
-namespace ApiGateway.Middleware
+namespace Middlewares.Middleware
 {
     public class ExceptionMiddleware
     {

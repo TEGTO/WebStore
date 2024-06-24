@@ -1,7 +1,7 @@
-﻿using FluentValidation;
-using WebStoreBackEnd.Models.Dto;
+﻿using AuthenticationWebApi.Models.Dto;
+using FluentValidation;
 
-namespace WebStoreBackEnd.Validators
+namespace AuthenticationWebApi.Validators
 {
     public class UserUpdateDataDtoValidator : AbstractValidator<UserUpdateDataDto>
     {

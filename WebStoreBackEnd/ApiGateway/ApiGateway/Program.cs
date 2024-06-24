@@ -1,6 +1,3 @@
-using ApiGateway.Middleware;
-using FluentValidation;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 
@@ -27,20 +24,8 @@ builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddEnvironmentVariables();
 builder.Services.AddOcelot(builder.Configuration);
 
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
-{
-    options.InvalidModelStateResponseFactory = context =>
-    {
-        var errors = context.ModelState
-                .Where(x => x.Value.ValidationState == ModelValidationState.Invalid)
-                .SelectMany(x => x.Value.Errors.Select(e => new FluentValidation.Results.ValidationFailure(x.Key, e.ErrorMessage)))
-                .ToList();
-        throw new ValidationException(errors);
-    };
-});
 var app = builder.Build();
 
-app.UseExceptionMiddleware();
 app.UseCors(MyAllowSpecificOrigins);
 await app.UseOcelot();
 app.Run();

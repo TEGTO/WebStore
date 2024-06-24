@@ -1,9 +1,9 @@
 {
   "Routes": [
-    //Authentication Web API
+    // Authentication Web API - Login
     {
-      "UpstreamPathTemplate": "/auth",
-      "UpstreamHttpMethod": [ "Post", "Put" ],
+      "UpstreamPathTemplate": "/auth/login",
+      "UpstreamHttpMethod": [ "POST" ],
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -11,10 +11,36 @@
           "Port": 7256
         }
       ],
-      "DownstreamPathTemplate": "/auth"
+      "DownstreamPathTemplate": "/auth/login"
+    },
+    // Authentication Web API - Register
+    {
+      "UpstreamPathTemplate": "/auth/register",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7256
+        }
+      ],
+      "DownstreamPathTemplate": "/auth/register"
+    },
+    // Authentication Web API - Update
+    {
+      "UpstreamPathTemplate": "/auth/update",
+      "UpstreamHttpMethod": [ "PUT" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7256
+        }
+      ],
+      "DownstreamPathTemplate": "/auth/update"
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl":  "https://localhost:800"
+    "BaseUrl": "https://localhost:7129"
   }
 }

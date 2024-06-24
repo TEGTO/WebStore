@@ -1,13 +1,15 @@
 using AuthenticationManager;
 using AuthenticationManager.Models;
 using AuthenticationManager.Services;
+using AuthenticationWebApi.Data;
+using AuthenticationWebApi.Models;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-using WebStoreBackEnd.Data;
-using WebStoreBackEnd.Models;
+using Middlewares.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +54,18 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 ValidatorOptions.Global.LanguageManager.Enabled = false;
 
+builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
+{
+    options.InvalidModelStateResponseFactory = context =>
+    {
+        var errors = context.ModelState
+                .Where(x => x.Value.ValidationState == ModelValidationState.Invalid)
+                .SelectMany(x => x.Value.Errors.Select(e => new FluentValidation.Results.ValidationFailure(x.Key, e.ErrorMessage)))
+                .ToList();
+        throw new ValidationException(errors);
+    };
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
 {
@@ -91,6 +105,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseExceptionMiddleware();
 
 app.UseAuthentication();
 app.UseAuthorization();

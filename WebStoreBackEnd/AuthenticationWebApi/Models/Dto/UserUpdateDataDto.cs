@@ -1,4 +1,4 @@
-﻿namespace WebStoreBackEnd.Models.Dto
+﻿namespace AuthenticationWebApi.Models.Dto
 {
     public class UserUpdateDataDto
     {

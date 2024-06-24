@@ -1,15 +1,15 @@
 ﻿using AuthenticationManager.Services;
+using AuthenticationWebApi.Models;
+using AuthenticationWebApi.Models.Dto;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Middlewares.Contracts;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net;
-using WebStoreBackEnd.Contracts;
-using WebStoreBackEnd.Models;
-using WebStoreBackEnd.Models.Dto;
 
-namespace WebStoreBackEnd.Controllers
+namespace AuthenticationWebApi.Controllers
 {
     [Route("auth")]
     [ApiController]
