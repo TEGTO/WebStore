@@ -1,35 +1,15 @@
+using AuthenticationManager;
+using AuthenticationManager.Models;
+using AuthenticationManager.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 using WebStoreBackEnd.Data;
-using WebStoreBackEnd.Middleware;
 using WebStoreBackEnd.Models;
-using WebStoreBackEnd.Services;
 
 var builder = WebApplication.CreateBuilder(args);
-
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-var allowedOrigins = builder.Configuration.GetSection("AllowedCORSOrigins").Get<string[]>() ?? [];
-
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(name: MyAllowSpecificOrigins, policy =>
-    {
-        policy.WithOrigins(allowedOrigins)
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-        if (builder.Environment.IsDevelopment())
-        {
-            policy.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
-        }
-    });
-});
 
 builder.Services.AddDbContext<WebStoreDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -46,28 +26,19 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 .AddEntityFrameworkStores<WebStoreDbContext>()
 .AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication(options =>
+var jwtSettings = new JwtSettings()
 {
-    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-    options.TokenValidationParameters = new TokenValidationParameters
-    {
-        ValidIssuer = builder.Configuration["JwtSettings:Issuer"],
-        ValidAudience = builder.Configuration["JwtSettings:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:Key"]!)),
-        ValidateIssuer = true,
-        ValidateAudience = true,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true
-    };
-});
+    Key = builder.Configuration["JwtSettings:Key"],
+    Audience = builder.Configuration["JwtSettings:Audience"],
+    Issuer = builder.Configuration["JwtSettings:Issuer"],
+    ExpiryInMinutes = Convert.ToDouble(builder.Configuration["JwtSettings:ExpiryInMinutes"]),
+};
+builder.Services.AddSingleton(jwtSettings);
 
 builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<JwtHandler>();
+builder.Services.AddCustomJwtAuthentication(jwtSettings);
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
@@ -80,18 +51,6 @@ builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 ValidatorOptions.Global.LanguageManager.Enabled = false;
-
-builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
-{
-    options.InvalidModelStateResponseFactory = context =>
-    {
-        var errors = context.ModelState
-                .Where(x => x.Value.ValidationState == ModelValidationState.Invalid)
-                .SelectMany(x => x.Value.Errors.Select(e => new FluentValidation.Results.ValidationFailure(x.Key, e.ErrorMessage)))
-                .ToList();
-        throw new ValidationException(errors);
-    };
-});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opt =>
@@ -132,8 +91,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseExceptionMiddleware();
-app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthentication();
 app.UseAuthorization();

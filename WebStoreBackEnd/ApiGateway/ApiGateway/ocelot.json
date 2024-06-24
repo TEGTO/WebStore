@@ -1,0 +1,20 @@
+{
+  "Routes": [
+    //Authentication Web API
+    {
+      "UpstreamPathTemplate": "/auth",
+      "UpstreamHttpMethod": [ "Post", "Put" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7256
+        }
+      ],
+      "DownstreamPathTemplate": "/auth"
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl":  "https://localhost:800"
+  }
+}

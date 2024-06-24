@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using AuthenticationManager.Services;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -6,7 +8,6 @@ using System.Net;
 using WebStoreBackEnd.Contracts;
 using WebStoreBackEnd.Models;
 using WebStoreBackEnd.Models.Dto;
-using WebStoreBackEnd.Services;
 
 namespace WebStoreBackEnd.Controllers
 {
@@ -52,6 +53,7 @@ namespace WebStoreBackEnd.Controllers
             return Ok(new AuthResponseDto { Token = token, ExpiredOn = tokenOptions.ValidTo });
         }
         [HttpPut("update")]
+        [Authorize]
         public async Task<IActionResult> Update([FromBody] UserUpdateDataDto updateModel)
         {
             var user = await userManager.FindByEmailAsync(updateModel.OldEmail);

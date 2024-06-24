@@ -1,8 +1,8 @@
-﻿using FluentValidation;
+﻿using ApiGateway.Contracts;
+using FluentValidation;
 using System.Net;
-using WebStoreBackEnd.Contracts;
 
-namespace WebStoreBackEnd.Middleware
+namespace ApiGateway.Middleware
 {
     public class ExceptionMiddleware
     {

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using WebStoreBackEnd.Data;
+using ApiGateway.Data;
 
 #nullable disable
 
-namespace WebStoreBackEnd.Migrations
+namespace ApiGateway.Migrations
 {
     [DbContext(typeof(WebStoreDbContext))]
     [Migration("20240622161026_InitialMigration")]
