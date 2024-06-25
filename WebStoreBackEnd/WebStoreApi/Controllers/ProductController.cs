@@ -1,0 +1,29 @@
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using WebStoreApi.Models;
+using WebStoreApi.Models.Dto;
+using WebStoreApi.Services;
+
+namespace WebStoreApi.Controllers
+{
+    [Route("store/product")]
+    [ApiController]
+    public class ProductController : ControllerBase
+    {
+        private readonly IProductsService productsService;
+        private readonly IMapper mapper;
+
+        public ProductController(IProductsService productsService, IMapper mapper)
+        {
+            this.productsService = productsService;
+            this.mapper = mapper;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts(CancellationToken cancellationToken)
+        {
+            IEnumerable<Product> products = await productsService.GetAllProductsAsync(cancellationToken);
+            return Ok(products.Select(mapper.Map<ProductDto>));
+        }
+    }
+}

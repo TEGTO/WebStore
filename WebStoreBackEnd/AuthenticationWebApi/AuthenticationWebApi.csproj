@@ -23,7 +23,7 @@
 
 	<ItemGroup>
 	  <ProjectReference Include="..\AuthenticationManager\AuthenticationManager.csproj" />
-	  <ProjectReference Include="..\Middlewares\Middlewares.csproj" />
+	  <ProjectReference Include="..\Shared\Shared.csproj" />
 	</ItemGroup>
 
 </Project>

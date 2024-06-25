@@ -1,32 +1,20 @@
 using AuthenticationManager;
 using AuthenticationManager.Models;
 using AuthenticationManager.Services;
-using AuthenticationWebApi.Data;
-using AuthenticationWebApi.Models;
 using FluentValidation;
 using FluentValidation.AspNetCore;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Middlewares;
 using Middlewares.Middleware;
+using WebStoreApi.Data;
+using WebStoreApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<AuthIdentityDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("AuthenticationConnection")));
-
-builder.Services.AddIdentity<User, IdentityRole>(options =>
-{
-    options.Password.RequiredLength = 8;
-    options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequireDigit = false;
-    options.Password.RequireUppercase = false;
-    options.Password.RequireLowercase = false;
-    options.User.RequireUniqueEmail = true;
-})
-.AddEntityFrameworkStores<AuthIdentityDbContext>()
-.AddDefaultTokenProviders();
+var connectionString = builder.Configuration.GetConnectionString("WebStoreConnection") ?? throw new InvalidOperationException("Connection string 'WebStoreConnection' is not found.");
+builder.Services.AddDbContextFactory<WebStoreDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 var jwtSettings = new JwtSettings()
 {
@@ -38,9 +26,11 @@ var jwtSettings = new JwtSettings()
 builder.Services.AddSingleton(jwtSettings);
 
 builder.Services.AddAuthorization();
-
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddCustomJwtAuthentication(jwtSettings);
+
+builder.Services.AddSingleton<IProductsService, ProductsService>();
+builder.Services.AddSingleton<IUserCartService, UserCartService>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
@@ -48,11 +38,11 @@ builder.Services.AddHttpsRedirection(options =>
 {
     options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
 });
-
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 ValidatorOptions.Global.LanguageManager.Enabled = false;
+
 
 builder.Services.ConfigureCustomInvalidModelStateResponseContollers();
 
@@ -95,11 +85,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthorization();
+
 app.UseExceptionMiddleware();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

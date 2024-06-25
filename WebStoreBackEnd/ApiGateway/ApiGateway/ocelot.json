@@ -38,6 +38,71 @@
         }
       ],
       "DownstreamPathTemplate": "/auth/update"
+    },
+    // Web Store API - GetAllProducts
+    {
+      "UpstreamPathTemplate": "/store/product",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7039
+        }
+      ],
+      "DownstreamPathTemplate": "/store/product"
+    },
+    // Web Store API - GetProductsByUserId
+    {
+      "UpstreamPathTemplate": "/store/product/{userId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7039
+        }
+      ],
+      "DownstreamPathTemplate": "/store/product/{userId}"
+    },
+    // Web Store API - GetProductAmountByUserId
+    {
+      "UpstreamPathTemplate": "/store/amount/{userId}",
+      "UpstreamHttpMethod": [ "GET" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7039
+        }
+      ],
+      "DownstreamPathTemplate": "/store/amount/{userId}"
+    },
+    // Web Store API - AddProductToUserCart
+    {
+      "UpstreamPathTemplate": "/store/product/{userId}",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7039
+        }
+      ],
+      "DownstreamPathTemplate": "/store/product/{userId}"
+    },
+    // Web Store API - RemoveProductFromUserCart
+    {
+      "UpstreamPathTemplate": "/store/product/{userId}",
+      "UpstreamHttpMethod": [ "DELETE" ],
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7039
+        }
+      ],
+      "DownstreamPathTemplate": "/store/product/{userId}"
     }
   ],
   "GlobalConfiguration": {

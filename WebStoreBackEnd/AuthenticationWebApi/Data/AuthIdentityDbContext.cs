@@ -4,9 +4,9 @@ using AuthenticationWebApi.Models;
 
 namespace AuthenticationWebApi.Data
 {
-    public class WebStoreDbContext : IdentityDbContext<User>
+    public class AuthIdentityDbContext : IdentityDbContext<User>
     {
-        public WebStoreDbContext(DbContextOptions options) : base(options)
+        public AuthIdentityDbContext(DbContextOptions options) : base(options)
         {
         }
 

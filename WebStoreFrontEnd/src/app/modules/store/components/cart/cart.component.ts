@@ -17,7 +17,7 @@ export class CartComponent implements OnInit {
     this.redirectToHomePageIfUserNotAuthenticated();
     this.numbers = Array(10).fill(1);
     this.products.push({
-      id: "",
+      id: 1,
       name: "Wireless Controller Carbon Black (XOA-0005, QAT-00001)",
       price: 200,
       avgRating: 4.5,
@@ -25,10 +25,10 @@ export class CartComponent implements OnInit {
     })
   }
   private redirectToHomePageIfUserNotAuthenticated() {
-    // this.authService.getAuthUserData().subscribe(authData => {
-    //   if (!authData.isAuthenticated) {
-    //     this.redirectService.redirectToHome();
-    //   }
-    // })
+    this.authService.getAuthUserData().subscribe(authData => {
+      if (!authData.isAuthenticated) {
+        this.redirectService.redirectToHome();
+      }
+    })
   }
 }
