@@ -9,12 +9,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { CustomErrorHandler, ErrorHandlerService, URLDefiner, URLDefinerService } from '../shared';
+import { AssortementComponent } from '../store';
+import { StoreModule } from '../store/store.module';
 import { AppComponent, MainViewComponent } from './index';
 
 const routes: Routes = [
   {
     path: "", component: MainViewComponent,
-    children: []
+    children: [{ path: "", component: AssortementComponent }]
   }
 ];
 
@@ -32,7 +34,8 @@ const routes: Routes = [
     MatButtonModule,
     MatDialogModule,
     AuthenticationModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule
   ],
   providers: [
     { provide: URLDefiner, useClass: URLDefinerService },
