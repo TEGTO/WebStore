@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { ProductDataDto } from '../../../shared';
 
 @Component({
   selector: 'store-product',
@@ -6,4 +7,6 @@ import { Component } from '@angular/core';
   styleUrl: './product.component.scss'
 })
 export class ProductComponent {
+  @Input({ required: true })
+  product!: ProductDataDto;
 }

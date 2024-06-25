@@ -8,15 +8,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthenticationModule } from '../authentication/authentication.module';
-import { CustomErrorHandler, ErrorHandlerService, URLDefiner, URLDefinerService } from '../shared';
-import { AssortementComponent } from '../store';
+import { CustomErrorHandler, ErrorHandlerService, RedirectorContollerService, RedirectorService, URLDefiner, URLDefinerService } from '../shared';
+import { AssortementComponent, CartComponent } from '../store';
 import { StoreModule } from '../store/store.module';
 import { AppComponent, MainViewComponent } from './index';
 
 const routes: Routes = [
   {
     path: "", component: MainViewComponent,
-    children: [{ path: "", component: AssortementComponent }]
+    children: [
+      { path: "", component: AssortementComponent },
+      { path: "cart", component: CartComponent }
+    ]
   }
 ];
 
@@ -40,6 +43,7 @@ const routes: Routes = [
   providers: [
     { provide: URLDefiner, useClass: URLDefinerService },
     { provide: CustomErrorHandler, useClass: ErrorHandlerService },
+    { provide: RedirectorService, useClass: RedirectorContollerService },
   ],
   bootstrap: [AppComponent]
 })

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationDialogManager, AuthenticationService } from '../../../authentication';
+import { RedirectorService } from '../../../shared';
 
 @Component({
   selector: 'app-main-view',
@@ -10,10 +11,12 @@ export class MainViewComponent implements OnInit {
   isAuthenticated: boolean = false;
   itemsInCartAmount: number = 0;
 
-  constructor(private authService: AuthenticationService, private authDialogManager: AuthenticationDialogManager) { }
+  constructor(private authService: AuthenticationService,
+    private redirectService: RedirectorService,
+    private authDialogManager: AuthenticationDialogManager) { }
 
-  increaseItemsInCartAmount() {
-    this.itemsInCartAmount++;
+  redirectToCartPage() {
+    this.redirectService.redirectTo("/cart");
   }
   openLoginMenu() {
     const dialogRef = this.authDialogManager.openLoginMenu();
