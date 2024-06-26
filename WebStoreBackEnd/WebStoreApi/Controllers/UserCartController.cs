@@ -22,33 +22,33 @@ namespace WebStoreApi.Controllers
         }
 
         [HttpGet]
-        [Route("product/{userId}")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsByUserId([FromRoute] string userId, CancellationToken cancellationToken)
+        [Route("product/{userEmail}")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsByUserId([FromRoute] string userEmail, CancellationToken cancellationToken)
         {
-            IEnumerable<Product> products = await userCartService.GetProductsByUserIdAsync(userId, cancellationToken);
+            IEnumerable<Product> products = await userCartService.GetProductsInUserCartAsync(userEmail, cancellationToken);
             return Ok(products.Select(mapper.Map<ProductDto>));
         }
         [HttpGet]
-        [Route("amount/{userId}")]
-        public async Task<ActionResult<int>> GetProductAmountByUserId([FromRoute] string userId, CancellationToken cancellationToken)
+        [Route("amount/{userEmail}")]
+        public async Task<ActionResult<int>> GetProductAmountByUserId([FromRoute] string userEmail, CancellationToken cancellationToken)
         {
-            int amount = await userCartService.GetProductsAmountByUserIdAsync(userId, cancellationToken);
+            int amount = await userCartService.GetProductsInUserCartAmountAsync(userEmail, cancellationToken);
             return Ok(amount);
         }
         [HttpPost]
-        [Route("product/{userId}")]
-        public async Task<IActionResult> AddProductToUserCart([FromRoute] string userId, ProductDto productDto, CancellationToken cancellationToken)
+        [Route("product/{userEmail}")]
+        public async Task<IActionResult> AddProductToUserCart([FromRoute] string userEmail, ProductDto productDto, CancellationToken cancellationToken)
         {
             Product product = mapper.Map<Product>(productDto);
-            await userCartService.AddProductToUserCartAsync(userId, product, cancellationToken);
+            await userCartService.AddProductToUserCartAsync(userEmail, product, cancellationToken);
             return Ok();
         }
         [HttpDelete]
-        [Route("product/{userId}")]
-        public async Task<IActionResult> RemoveProductFromUserCart([FromRoute] string userId, ProductDto productDto, CancellationToken cancellationToken)
+        [Route("product/{userEmail}")]
+        public async Task<IActionResult> RemoveProductFromUserCart([FromRoute] string userEmail, ProductDto productDto, CancellationToken cancellationToken)
         {
             Product product = mapper.Map<Product>(productDto);
-            await userCartService.RemoveProductFromUserCartAsync(userId, product, cancellationToken);
+            await userCartService.RemoveProductFromUserCartAsync(userEmail, product, cancellationToken);
             return Ok();
         }
     }

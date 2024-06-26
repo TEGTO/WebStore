@@ -23,7 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthenticationManager\AuthenticationManager.csproj" />
-    <ProjectReference Include="..\AuthenticationWebApi\AuthenticationWebApi.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 </Project>

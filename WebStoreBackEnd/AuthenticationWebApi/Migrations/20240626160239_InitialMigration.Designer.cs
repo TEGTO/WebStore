@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace AuthenticationWebApi.Migrations
 {
     [DbContext(typeof(AuthIdentityDbContext))]
-    [Migration("20240625190000_InitialMigration")]
+    [Migration("20240626160239_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -78,6 +78,9 @@ namespace AuthenticationWebApi.Migrations
                         .HasColumnType("character varying(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");

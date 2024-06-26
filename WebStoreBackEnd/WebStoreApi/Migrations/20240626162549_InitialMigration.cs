@@ -31,12 +31,14 @@ namespace WebStoreApi.Migrations
                 name: "UserProducts",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "text", nullable: false),
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserEmail = table.Column<string>(type: "text", nullable: false),
                     ProductId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserProducts", x => new { x.UserId, x.ProductId });
+                    table.PrimaryKey("PK_UserProducts", x => x.Id);
                     table.ForeignKey(
                         name: "FK_UserProducts_Products_ProductId",
                         column: x => x.ProductId,
@@ -44,11 +46,11 @@ namespace WebStoreApi.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserProducts_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                      name: "FK_UserProducts_AspNetUsers_UserEmail",
+                      column: x => x.UserEmail,
+                      principalTable: "AspNetUsers",
+                      principalColumn: "Email",
+                      onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

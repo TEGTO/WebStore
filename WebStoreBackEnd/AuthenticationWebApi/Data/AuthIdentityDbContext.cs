@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AuthenticationWebApi.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using AuthenticationWebApi.Models;
 
 namespace AuthenticationWebApi.Data
 {
@@ -13,6 +13,10 @@ namespace AuthenticationWebApi.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+            builder.Entity<User>(u =>
+            {
+                u.HasIndex(u => u.Email).IsUnique();
+            });
         }
     }
 }

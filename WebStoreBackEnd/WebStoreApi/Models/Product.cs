@@ -14,5 +14,6 @@ namespace WebStoreApi.Models
         public float AvgRating { get; set; }
         [MaxLength(256)]
         public string? ImgUrl { get; set; }
+        public List<UserProduct> UserProducts { get; set; } = default!;
     }
 }
