@@ -2,18 +2,19 @@ import { createAction, props } from "@ngrx/store";
 import { UserAuthData } from "../..";
 import { UserAuthenticationDto, UserRegistrationDto, UserUpdateDataDto } from "../../../shared";
 
+//Registration
 export const registerUser = createAction(
-    '[Auth] Register New User',
+    '[Registration] Register New User',
     props<{ userRegistrationData: UserRegistrationDto }>()
 );
 export const registerSuccess = createAction(
-    '[Auth] Register New User Success'
+    '[Registration] Register New User Success'
 );
 export const registerFailure = createAction(
-    '[Auth] Register New User Failure',
+    '[Registration] Register New User Failure',
     props<{ error: any }>()
 );
-
+//Auth
 export const signInUser = createAction(
     '[Auth] Sing In By User Data',
     props<{ userAuthData: UserAuthenticationDto }>()
@@ -26,6 +27,7 @@ export const signInUserFailure = createAction(
     '[Auth] Sing In By User Data Failure',
     props<{ error: any }>()
 );
+
 export const getAuthUserData = createAction(
     '[Auth] Get Authenticated User Data'
 );
@@ -33,12 +35,14 @@ export const getAuthUserDataSuccess = createAction(
     '[Auth] Get Authenticated User Data Success',
     props<{ userAuthData: UserAuthData }>()
 );
+
 export const logOutUser = createAction(
     '[Auth] Log out Authenticated User'
 );
 export const logOutUserSuccess = createAction(
     '[Auth] Log out Authenticated User Success'
 );
+
 export const updateUserData = createAction(
     '[Auth] Update Authenticated User',
     props<{ userUpdateData: UserUpdateDataDto }>()

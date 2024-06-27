@@ -42,11 +42,11 @@ namespace WebStoreApi.Services
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
         }
-        public async Task RemoveProductFromUserCartAsync(string user, Product product, CancellationToken cancellationToken)
+        public async Task RemoveProductFromUserCartAsync(string user, int productId, CancellationToken cancellationToken)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                var userProduct = await dbContext.UserProducts.FirstAsync(x => x.UserEmail == user && x.ProductId == product.Id, cancellationToken);
+                var userProduct = await dbContext.UserProducts.FirstAsync(x => x.UserEmail == user && x.ProductId == productId, cancellationToken);
                 dbContext.Remove(userProduct);
                 await dbContext.SaveChangesAsync(cancellationToken);
             }

@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
-import { AssortementComponent, CartComponent, ProductComponent, ProductRatingComponent } from '.';
+import { provideEffects } from '@ngrx/effects';
+import { provideState, provideStore } from '@ngrx/store';
+import { AssortementComponent, CartComponent, CartProductComponent, ProductComponent, ProductRatingComponent, ProductsEffects, UserCartEffects, productReducer, userCartReducer } from '.';
 import { AuthenticationModule } from '../authentication/authentication.module';
-import { CartProductComponent } from './components/cart-product/cart-product.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,13 @@ import { CartProductComponent } from './components/cart-product/cart-product.com
   exports: [
     AssortementComponent,
     CartComponent
+  ],
+  providers: [
+    provideStore(),
+    provideState({ name: "products", reducer: productReducer }),
+    provideState({ name: "usercart", reducer: userCartReducer }),
+    provideEffects(ProductsEffects),
+    provideEffects(UserCartEffects),
   ]
 })
 export class StoreModule { }

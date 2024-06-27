@@ -5,6 +5,7 @@ import { UserAuthData, getAuthUserData, getAuthUserDataSuccess, logOutUser, logO
 import { AuthenticationApiService } from "../../../shared";
 import { LocalStorageService } from "../../../shared/services/local-storage/local-storage.service";
 
+//Registration
 @Injectable()
 export class RegistrationEffects {
     constructor(private actions$: Actions,
@@ -22,7 +23,7 @@ export class RegistrationEffects {
         )
     );
 }
-
+//Auth
 @Injectable()
 export class SignInEffects {
     readonly storageUserAuthDataKey: string = "UserAuthData";

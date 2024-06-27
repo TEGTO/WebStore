@@ -19,6 +19,9 @@ export class BaseApiService {
   protected combinePathWithAuthApiUrl(path: string) {
     return this.urlDefiner.combineWithAuthApiUrl(path);
   }
+  protected combinePathWithWebStoreApiUrl(path: string) {
+    return this.urlDefiner.combineWithWebStorepiUrl(path);
+  }
   protected handleError(error: any) {
     this.errorHandler.handleError(error);
     return throwError(() => new Error(error.messages.join('\n')));

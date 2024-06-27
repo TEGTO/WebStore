@@ -1,8 +1,8 @@
 import { MemoizedSelector, createFeatureSelector, createSelector } from "@ngrx/store";
 import { AuthState, RegistrationState, UserAuthData } from "../..";
 
+//Registration
 export const selectRegistrationState = createFeatureSelector<RegistrationState>('registration');
-
 export const selectIsRegistrationSuccess = createSelector(
     selectRegistrationState,
     (state: RegistrationState) => state.isSuccess
@@ -11,9 +11,8 @@ export const selectRegistrationErrors = createSelector(
     selectRegistrationState,
     (state: RegistrationState) => state.error
 );
-
+//Auth
 export const selectAuthState = createFeatureSelector<AuthState>('authentication');
-
 export const selectAuthData: MemoizedSelector<object, UserAuthData> = createSelector(
     selectAuthState,
     (state: AuthState) => ({
