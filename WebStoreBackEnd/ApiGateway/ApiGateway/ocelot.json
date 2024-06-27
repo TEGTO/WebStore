@@ -52,9 +52,9 @@
       ],
       "DownstreamPathTemplate": "/store/product"
     },
-    // Web Store API - GetProductsByUserId
+    // Web Store API - GetProductsByUser
     {
-      "UpstreamPathTemplate": "/store/product/{userId}",
+      "UpstreamPathTemplate": "/store/usercart/product/{user}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -63,11 +63,11 @@
           "Port": 7039
         }
       ],
-      "DownstreamPathTemplate": "/store/product/{userId}"
+      "DownstreamPathTemplate": "/store/usercart/product/{user}"
     },
-    // Web Store API - GetProductAmountByUserId
+    // Web Store API - GetProductAmountByUser
     {
-      "UpstreamPathTemplate": "/store/amount/{userId}",
+      "UpstreamPathTemplate": "/store/usercart/amount/{user}",
       "UpstreamHttpMethod": [ "GET" ],
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -76,11 +76,11 @@
           "Port": 7039
         }
       ],
-      "DownstreamPathTemplate": "/store/amount/{userId}"
+      "DownstreamPathTemplate": "/store/usercart/amount/{user}"
     },
     // Web Store API - AddProductToUserCart
     {
-      "UpstreamPathTemplate": "/store/product/{userId}",
+      "UpstreamPathTemplate": "/store/usercart/product/{user}",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -89,11 +89,11 @@
           "Port": 7039
         }
       ],
-      "DownstreamPathTemplate": "/store/product/{userId}"
+      "DownstreamPathTemplate": "/store/usercart/product/{user}"
     },
     // Web Store API - RemoveProductFromUserCart
     {
-      "UpstreamPathTemplate": "/store/product/{userId}",
+      "UpstreamPathTemplate": "/store/usercart/product/{user}",
       "UpstreamHttpMethod": [ "DELETE" ],
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
@@ -102,7 +102,7 @@
           "Port": 7039
         }
       ],
-      "DownstreamPathTemplate": "/store/product/{userId}"
+      "DownstreamPathTemplate": "/store/usercart/product/{user}"
     }
   ],
   "GlobalConfiguration": {

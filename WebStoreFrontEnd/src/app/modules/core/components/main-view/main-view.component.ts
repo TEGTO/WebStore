@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationDialogManager, AuthenticationService } from '../../../authentication';
 import { RedirectorService } from '../../../shared';
+import { UserCartService } from '../../../store';
 
 @Component({
   selector: 'app-main-view',
@@ -13,7 +14,8 @@ export class MainViewComponent implements OnInit {
 
   constructor(private authService: AuthenticationService,
     private redirectService: RedirectorService,
-    private authDialogManager: AuthenticationDialogManager) { }
+    private authDialogManager: AuthenticationDialogManager,
+    private userCartService: UserCartService) { }
 
   redirectToCartPage() {
     this.redirectService.redirectTo("/cart");
@@ -25,6 +27,11 @@ export class MainViewComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getAuthUserData().subscribe(data => {
       this.isAuthenticated = data.isAuthenticated;
+      if (this.isAuthenticated) {
+        this.userCartService.getUserCartProductAmount(data.userEmail).subscribe(amount => {
+          this.itemsInCartAmount = amount;
+        });
+      }
     })
   }
 }

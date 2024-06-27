@@ -1,5 +1,5 @@
 <div class="product-container">
-    <div *ngFor="let item of numbers">
-        <store-product [product]="products[0]"></store-product>
+    <div *ngFor="let product of products">
+        <store-product [product]="product" [userAuthData]="userAuthData"></store-product>
     </div>
 </div>

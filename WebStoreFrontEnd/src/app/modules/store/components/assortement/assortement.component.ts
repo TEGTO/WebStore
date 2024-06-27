@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../..';
+import { AuthenticationService, UserAuthData } from '../../../authentication';
 import { ProductDataDto } from '../../../shared';
 
 @Component({
@@ -6,18 +8,19 @@ import { ProductDataDto } from '../../../shared';
   templateUrl: './assortement.component.html',
   styleUrl: './assortement.component.scss'
 })
-export class AssortementComponent {
+export class AssortementComponent implements OnInit {
   products: ProductDataDto[] = [];
-  numbers: Array<number> = [];
+  userAuthData!: UserAuthData;
 
-  constructor() {
-    this.numbers = Array(10).fill(1);
-    this.products.push({
-      id: 1,
-      name: "Wireless Controller Carbon Black (XOA-0005, QAT-00001)",
-      price: 200,
-      avgRating: 4.5,
-      imgUrl: "https://content1.rozetka.com.ua/goods/images/big/261296642.jpg"
-    })
+  constructor(private authService: AuthenticationService, private productService: ProductService) {
+  }
+
+  ngOnInit(): void {
+    this.productService.getAllProducts().subscribe(products => {
+      this.products = products;
+    });
+    this.authService.getAuthUserData().subscribe(userData => {
+      this.userAuthData = userData;
+    });
   }
 }

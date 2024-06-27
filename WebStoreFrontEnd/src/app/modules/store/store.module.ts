@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { provideEffects } from '@ngrx/effects';
 import { provideState, provideStore } from '@ngrx/store';
-import { AssortementComponent, CartComponent, CartProductComponent, ProductComponent, ProductRatingComponent, ProductsEffects, UserCartEffects, productReducer, userCartReducer } from '.';
+import { AssortementComponent, CartComponent, CartProductComponent, ProductComponent, ProductControllerService, ProductRatingComponent, ProductService, ProductsEffects, UserCartControllerService, UserCartEffects, UserCartService, productReducer, userCartReducer } from '.';
 import { AuthenticationModule } from '../authentication/authentication.module';
 
 @NgModule({
@@ -26,6 +26,8 @@ import { AuthenticationModule } from '../authentication/authentication.module';
     CartComponent
   ],
   providers: [
+    { provide: ProductService, useClass: ProductControllerService },
+    { provide: UserCartService, useClass: UserCartControllerService },
     provideStore(),
     provideState({ name: "products", reducer: productReducer }),
     provideState({ name: "usercart", reducer: userCartReducer }),

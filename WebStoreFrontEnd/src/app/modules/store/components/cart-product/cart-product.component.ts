@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { UserCartService } from '../..';
+import { UserAuthData } from '../../../authentication';
 import { ProductDataDto } from '../../../shared';
 
 @Component({
@@ -8,10 +10,25 @@ import { ProductDataDto } from '../../../shared';
 })
 export class CartProductComponent {
   @Input({ required: true })
-  product!: ProductDataDto;
-  productQuantity: number = 1;
+  typeProducts!: ProductDataDto[];
+  @Input({ required: true })
+  userAuthData!: UserAuthData;
 
-  get finalPrice(): number { return this.product.price * this.productQuantity; }
+  get productType(): ProductDataDto { return this.typeProducts[0]; }
+  get finalPrice(): number { return this.productType.price * this.productQuantity; }
+  get productQuantity(): number { return this.typeProducts.length; }
+  set productQuantity(value: number) {
+    while (this.productQuantity != value) {
+      if (value > this.productQuantity) {
+        this.userCartService.addProductToUserCart(this.userAuthData.userEmail, this.productType);
+      }
+      else {
+        this.userCartService.removeProductFromUserCart(this.userAuthData.userEmail, this.productType);
+      }
+    }
+  }
+
+  constructor(private userCartService: UserCartService) { }
 
   increaseQuantity() {
     this.productQuantity++;

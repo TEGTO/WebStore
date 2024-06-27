@@ -1,5 +1,5 @@
 import { createReducer, on } from "@ngrx/store";
-import { getAuthUserDataSuccess, logOutUserSuccess, registerFailure, registerSuccess, registerUser, signInUser, signInUserFailure, signInUserSuccess, updateUserDataFailure, updateUserDataSuccess } from "../..";
+import { getAuthUserDataSuccess, logOutUserSuccess, registerFailure, registerSuccess, signInUser, signInUserFailure, signInUserSuccess, updateUserDataFailure, updateUserDataSuccess } from "../..";
 
 //Registration
 export interface RegistrationState {
@@ -12,11 +12,6 @@ const initialRegistrationState: RegistrationState = {
 };
 export const registrationReducer = createReducer(
     initialRegistrationState,
-    on(registerUser, (state) => ({
-        ...state,
-        isSuccess: false,
-        error: null
-    })),
     on(registerSuccess, (state) => ({
         ...state,
         isSuccess: true,
@@ -52,7 +47,8 @@ export interface UserAuthData {
 export const authReducer = createReducer(
     initialAuthState,
     on(signInUser, (state) => ({
-        ...initialAuthState
+        ...initialAuthState,
+        isAuthenticated: true
     })),
     on(signInUserSuccess, (state, { userAuthData: userAuthData }) => ({
         ...state,

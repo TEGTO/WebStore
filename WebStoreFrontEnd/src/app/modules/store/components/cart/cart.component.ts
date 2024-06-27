@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../../authentication';
+import { UserCartService } from '../..';
+import { AuthenticationService, UserAuthData } from '../../../authentication';
 import { ProductDataDto, RedirectorService } from '../../../shared';
 
 @Component({
@@ -9,26 +10,36 @@ import { ProductDataDto, RedirectorService } from '../../../shared';
 })
 export class CartComponent implements OnInit {
   products: ProductDataDto[] = [];
-  numbers: Array<number> = [];
+  productTypes: ProductDataDto[][] = [];
+  userAuthData!: UserAuthData;
 
-  constructor(private redirectService: RedirectorService, private authService: AuthenticationService) { }
+  get totalPrice(): number {
+    let total = 0;
+    this.products.forEach(product => {
+      total += product.price;
+    });
+    return total;
+  }
+
+  constructor(private redirectService: RedirectorService,
+    private authService: AuthenticationService,
+    private userCartService: UserCartService) { }
 
   ngOnInit(): void {
-    this.redirectToHomePageIfUserNotAuthenticated();
-    this.numbers = Array(10).fill(1);
-    this.products.push({
-      id: 1,
-      name: "Wireless Controller Carbon Black (XOA-0005, QAT-00001)",
-      price: 200,
-      avgRating: 4.5,
-      imgUrl: "https://content1.rozetka.com.ua/goods/images/big/261296642.jpg"
-    })
-  }
-  private redirectToHomePageIfUserNotAuthenticated() {
     this.authService.getAuthUserData().subscribe(authData => {
       if (!authData.isAuthenticated) {
         this.redirectService.redirectToHome();
       }
+      this.userAuthData = authData;
+      this.userCartService.getUserCartProducts(authData.userEmail).subscribe(products => {
+        this.products = products;
+        let types = new Map<number, ProductDataDto[]>();
+        products.map(x => x.id).forEach(productId => {
+          if (!types.has(productId))
+            types.set(productId, products.filter(x => x.id == productId));
+        });
+        this.productTypes = Array.from(types.values());
+      })
     })
   }
 }
