@@ -6,9 +6,9 @@ using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Middlewares;
-using Middlewares.Middleware;
 using WebStoreApi.Data;
 using WebStoreApi.Services;
+using Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +83,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureMigration<WebStoreDbContext>();
 
 app.UseHttpsRedirection();
 

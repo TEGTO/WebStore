@@ -43,7 +43,7 @@
     {
       "UpstreamPathTemplate": "/store/product",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "webstoreapi",

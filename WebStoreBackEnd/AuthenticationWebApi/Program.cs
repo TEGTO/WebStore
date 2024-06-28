@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Middlewares;
-using Middlewares.Middleware;
+using Shared;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -93,6 +93,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.ConfigureMigration<AuthIdentityDbContext>();
 
 app.UseHttpsRedirection();
 app.UseExceptionMiddleware();

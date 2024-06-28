@@ -15,14 +15,6 @@ COPY . .
 WORKDIR "/src/WebStoreApi"
 RUN dotnet build "./WebStoreApi.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS migration
-WORKDIR /src/WebStoreApi
-# Ensure dotnet-ef is installed
-RUN dotnet tool install --global dotnet-ef
-ENV PATH="${PATH}:/root/.dotnet/tools"
-# Run migrations
-RUN dotnet ef database update --project WebStoreApi --startup-project WebStoreApi --configuration $BUILD_CONFIGURATION
-
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./WebStoreApi.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false

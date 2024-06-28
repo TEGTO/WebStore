@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Middlewares.Contracts;
 using System.Net;
 
-namespace Middlewares.Middleware
+namespace Middlewares
 {
     public class ExceptionMiddleware
     {

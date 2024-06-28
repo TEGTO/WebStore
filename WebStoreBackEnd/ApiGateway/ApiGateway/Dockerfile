@@ -22,4 +22,8 @@ RUN dotnet publish "./ApiGateway.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+RUN mkdir -p /app/certificates
+COPY ApiGateway/ApiGateway/certificates/aspnetapp.pfx /app/certificates/aspnetapp.pfx
+
 ENTRYPOINT ["dotnet", "ApiGateway.dll"]

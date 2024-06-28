@@ -45,12 +45,6 @@ namespace WebStoreApi.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                      name: "FK_UserProducts_AspNetUsers_UserEmail",
-                      column: x => x.UserEmail,
-                      principalTable: "AspNetUsers",
-                      principalColumn: "Email",
-                      onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

@@ -4,10 +4,10 @@
     <ProjectVersion>2.1</ProjectVersion>
     <DockerTargetOS>Linux</DockerTargetOS>
     <DockerPublishLocally>False</DockerPublishLocally>
-    <ProjectGuid>b2867f52-414f-42ab-a59c-7f04fd3f606f</ProjectGuid>
+    <ProjectGuid>acbd77bc-58ff-496e-bb58-a5ba46ac4a0d</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>authenticationwebapi</DockerServiceName>
+    <DockerServiceName>webstoreapi</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include=".env" />

@@ -3,7 +3,7 @@ using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Middlewares
+namespace Shared
 {
     public static class ApiBehaviorOptionsExtensions
     {
