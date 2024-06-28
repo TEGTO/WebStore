@@ -33,21 +33,30 @@ namespace WebStoreApi.Services
             }
             return amount;
         }
-        public async Task AddProductToUserCartAsync(string user, Product product, CancellationToken cancellationToken)
+        public async Task AddProductToUserCartAsync(UserCartChange userCartChange, CancellationToken cancellationToken)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                UserProduct userProduct = new UserProduct() { UserEmail = user, ProductId = product.Id };
-                dbContext.Add(userProduct);
+                for (int i = 0; i < userCartChange.Amount; i++)
+                {
+                    UserProduct userProduct = new UserProduct() { UserEmail = userCartChange.UserEmail, ProductId = userCartChange.ProductId };
+                    dbContext.Add(userProduct);
+                }
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
         }
-        public async Task RemoveProductFromUserCartAsync(string user, int productId, CancellationToken cancellationToken)
+        public async Task RemoveProductFromUserCartAsync(UserCartChange userCartChange, CancellationToken cancellationToken)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                var userProduct = await dbContext.UserProducts.FirstAsync(x => x.UserEmail == user && x.ProductId == productId, cancellationToken);
-                dbContext.Remove(userProduct);
+                var userProducts = await dbContext.UserProducts
+                    .Where(x => x.UserEmail == userCartChange.UserEmail && x.ProductId == userCartChange.ProductId)
+                    .Take(userCartChange.Amount)
+                    .ToListAsync(cancellationToken);
+                foreach (var userProduct in userProducts)
+                {
+                    dbContext.UserProducts.Remove(userProduct);
+                }
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
         }

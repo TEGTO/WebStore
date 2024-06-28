@@ -13,9 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationManager", "Au
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthenticationWebApi", "AuthenticationWebApi\AuthenticationWebApi.csproj", "{1B6EC532-D198-4D5D-9C56-AB182974206E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebStoreApi", "WebStoreApi\WebStoreApi.csproj", "{0DB31251-D5D6-4489-AFBB-BDE2FD83B792}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebStoreApi", "WebStoreApi\WebStoreApi.csproj", "{0DB31251-D5D6-4489-AFBB-BDE2FD83B792}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{F5561E7F-DDD8-4151-BE37-EAECB2AB8B08}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Shared\Shared.csproj", "{F5561E7F-DDD8-4151-BE37-EAECB2AB8B08}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B2867F52-414F-42AB-A59C-7F04FD3F606F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{F5561E7F-DDD8-4151-BE37-EAECB2AB8B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5561E7F-DDD8-4151-BE37-EAECB2AB8B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5561E7F-DDD8-4151-BE37-EAECB2AB8B08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2867F52-414F-42AB-A59C-7F04FD3F606F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2867F52-414F-42AB-A59C-7F04FD3F606F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2867F52-414F-42AB-A59C-7F04FD3F606F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2867F52-414F-42AB-A59C-7F04FD3F606F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

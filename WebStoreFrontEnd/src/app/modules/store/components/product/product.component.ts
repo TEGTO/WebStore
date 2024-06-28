@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UserAuthData } from '../../../authentication';
-import { ProductDataDto } from '../../../shared';
+import { ProductDataDto, UserCartChange } from '../../../shared';
 import { UserCartService } from '../../services/user-cart-service/user-cart-service';
 
 @Component({
@@ -18,6 +18,16 @@ export class ProductComponent {
 
   addProductToUserCart() {
     if (this.userAuthData.isAuthenticated)
-      this.userCartService.addProductToUserCart(this.userAuthData.userEmail, this.product);
+      this.userCartService.addProductToUserCart(this.getCartChange(1));
+  }
+
+  private getCartChange(amout: number) {
+    let cartChange: UserCartChange =
+    {
+      userEmail: this.userAuthData.userEmail,
+      product: this.product,
+      amount: amout
+    };
+    return cartChange;
   }
 }

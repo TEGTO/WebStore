@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { addProductToUserCart, getUserProductAmount, getUserProducts, removeProductFromUserCart, selectUserProducts, selectUserProductsAmount } from '../..';
-import { ProductDataDto } from '../../../shared';
+import { ProductDataDto, UserCartChange } from '../../../shared';
 import { UserCartService } from './user-cart-service';
 
 @Injectable({
@@ -20,10 +20,10 @@ export class UserCartControllerService implements UserCartService {
     this.store.dispatch(getUserProductAmount({ userEmail: userEmail }));
     return this.store.select(selectUserProductsAmount);
   }
-  addProductToUserCart(userEmail: string, product: ProductDataDto): void {
-    this.store.dispatch(addProductToUserCart({ userEmail: userEmail, product: product }));
+  addProductToUserCart(changeCart: UserCartChange): void {
+    this.store.dispatch(addProductToUserCart({ userCartChange: changeCart }));
   }
-  removeProductFromUserCart(userEmail: string, product: ProductDataDto): void {
-    this.store.dispatch(removeProductFromUserCart({ userEmail: userEmail, product: product }));
+  removeProductFromUserCart(changeCart: UserCartChange): void {
+    this.store.dispatch(removeProductFromUserCart({ userCartChange: changeCart }));
   }
 }

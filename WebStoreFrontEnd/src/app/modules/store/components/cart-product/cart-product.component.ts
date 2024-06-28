@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UserCartService } from '../..';
 import { UserAuthData } from '../../../authentication';
-import { ProductDataDto } from '../../../shared';
+import { ProductDataDto, UserCartChange } from '../../../shared';
 
 @Component({
   selector: 'store-cart-product',
@@ -18,13 +18,14 @@ export class CartProductComponent {
   get finalPrice(): number { return this.productType.price * this.productQuantity; }
   get productQuantity(): number { return this.typeProducts.length; }
   set productQuantity(value: number) {
-    while (this.productQuantity != value) {
-      if (value > this.productQuantity) {
-        this.userCartService.addProductToUserCart(this.userAuthData.userEmail, this.productType);
-      }
-      else {
-        this.userCartService.removeProductFromUserCart(this.userAuthData.userEmail, this.productType);
-      }
+    let difference = value - this.productQuantity;
+    let changeCart: UserCartChange =
+      { userEmail: this.userAuthData.userEmail, product: this.productType, amount: Math.abs(difference) };
+    if (difference > 0) {
+      this.userCartService.addProductToUserCart(changeCart)
+    }
+    else {
+      this.userCartService.removeProductFromUserCart(changeCart);
     }
   }
 
@@ -43,6 +44,8 @@ export class CartProductComponent {
       return false;
     }
     return true;
-
+  }
+  deleteAll() {
+    this.productQuantity = 0;
   }
 }

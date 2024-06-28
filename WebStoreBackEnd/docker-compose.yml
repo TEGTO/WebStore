@@ -1,0 +1,71 @@
+version: '3.4'
+
+name: webstore-backend
+services:
+  db:
+    container_name: webstore-db
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "webstore-db"
+      POSTGRES_USER: "user1"
+      POSTGRES_PASSWORD: "12345"
+    networks:
+      - backend-net
+    volumes:
+      - webstore-db:/var/lib/postgresql/data
+
+  authenticationwebapi:
+    container_name: authenticationwebapi
+    image: ${DOCKER_REGISTRY-}authenticationwebapi
+    build:
+      context: .
+      dockerfile: AuthenticationWebApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__AuthenticationConnection=${CONNECTION_STRINGS_AUTHENTICATION}
+    networks:
+      - backend-net
+    depends_on:
+      - db
+
+  webstoreapi:
+    container_name: webstoreapi
+    image: ${DOCKER_REGISTRY-}webstoreapi
+    build:
+      context: .
+      dockerfile: WebStoreApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ConnectionStrings__AuthenticationConnection=${CONNECTION_STRINGS_WEB_STORE}
+    networks:
+      - backend-net
+    depends_on:
+      - db
+
+  apigateway:
+    container_name: apigateway
+    image: ${DOCKER_REGISTRY-}apigateway
+    build:
+      context: .
+      dockerfile: ApiGateway/ApiGateway/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
+      - ASPNETCORE_URLS=https://+:8081;
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=12345
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/app/certificates/aspnetapp.pfx
+      - AllowedCORSOrigins=*
+    ports: 
+    - 7129:8081
+    networks:
+      - backend-net
+  
+networks:
+  backend-net:
+    driver: bridge
+
+volumes:
+  webstore-db:

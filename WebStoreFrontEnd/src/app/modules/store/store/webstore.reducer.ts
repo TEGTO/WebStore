@@ -60,30 +60,35 @@ export const userCartReducer = createReducer(
         productsInCartAmount: 0,
         error: error
     })),
-    on(addProductToUserCartSuccess, (state, { product: product }) => ({
-        ...state,
-        productsInCart: [...state.productsInCart, product],
-        productsInCartAmount: state.productsInCartAmount + 1,
-        error: null
-    })),
+    on(addProductToUserCartSuccess, (state, { userCartChange: cartChange }) => {
+        const newProducts = Array(cartChange.amount).fill(cartChange.product);
+        return {
+            ...state,
+            productsInCart: [...state.productsInCart, ...newProducts],
+            productsInCartAmount: state.productsInCartAmount + cartChange.amount,
+            error: null
+        };
+    }),
     on(addProductToUserCartFailure, (state, { error: error }) => ({
         ...state,
         error: error
     })),
-    on(removeProductFromUserCartSuccess, (state, { product: product }) => {
-        const indexToRemove = state.productsInCart.findIndex(p => p.id === product.id);
-        if (indexToRemove !== -1) {
-            return {
-                ...state,
-                productsInCart: [
-                    ...state.productsInCart.slice(0, indexToRemove),
-                    ...state.productsInCart.slice(indexToRemove + 1)
-                ],
-                productsInCartAmount: state.productsInCartAmount > 0 ? state.productsInCartAmount - 1 : 0,
-                error: null
-            };
+    on(removeProductFromUserCartSuccess, (state, { userCartChange: cartChange }) => {
+        let remainingProductsInCart = [...state.productsInCart];
+        let remainingAmount = cartChange.amount;
+        for (let i = 0; i < remainingProductsInCart.length && remainingAmount > 0; i++) {
+            if (remainingProductsInCart[i].id === cartChange.product.id) {
+                remainingProductsInCart.splice(i, 1);
+                i--;
+                remainingAmount--;
+            }
         }
-        return state;
+        return {
+            ...state,
+            productsInCart: remainingProductsInCart,
+            productsInCartAmount: Math.max(state.productsInCartAmount - cartChange.amount, 0),
+            error: null
+        };
     }),
     on(removeProductFromUserCartFailure, (state, { error: error }) => ({
         ...state,

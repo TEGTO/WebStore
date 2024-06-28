@@ -42,7 +42,7 @@
             </div>
         </button>
         <mat-menu #menu="matMenu">
-            <button mat-menu-item>
+            <button mat-menu-item (click)="deleteAll()">
                 <div class="flex flex-row items-center">
                     <span class="material-icons">delete</span>
                     Delete

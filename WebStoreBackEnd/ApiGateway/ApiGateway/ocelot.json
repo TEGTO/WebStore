@@ -7,8 +7,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7256
+          "Host": "authenticationwebapi",
+          "Port": 80
         }
       ],
       "DownstreamPathTemplate": "/auth/login"
@@ -20,8 +20,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7256
+          "Host": "authenticationwebapi",
+          "Port": 80
         }
       ],
       "DownstreamPathTemplate": "/auth/register"
@@ -33,8 +33,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7256
+          "Host": "authenticationwebapi",
+          "Port": 80
         }
       ],
       "DownstreamPathTemplate": "/auth/update"
@@ -46,8 +46,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7039
+          "Host": "webstoreapi",
+          "Port": 80
         }
       ],
       "DownstreamPathTemplate": "/store/product"
@@ -59,8 +59,8 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7039
+          "Host": "webstoreapi",
+          "Port": 80
         }
       ],
       "DownstreamPathTemplate": "/store/usercart/product/{user}"
@@ -72,37 +72,37 @@
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7039
+          "Host": "webstoreapi",
+          "Port": 80
         }
       ],
       "DownstreamPathTemplate": "/store/usercart/amount/{user}"
     },
     // Web Store API - AddProductToUserCart
     {
-      "UpstreamPathTemplate": "/store/usercart/product/{user}",
+      "UpstreamPathTemplate": "/store/usercart",
       "UpstreamHttpMethod": [ "POST" ],
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7039
+          "Host": "webstoreapi",
+          "Port": 80
         }
       ],
-      "DownstreamPathTemplate": "/store/usercart/product/{user}"
+      "DownstreamPathTemplate": "/store/usercart"
     },
     // Web Store API - RemoveProductFromUserCart
     {
-      "UpstreamPathTemplate": "/store/usercart/product/{user}",
-      "UpstreamHttpMethod": [ "DELETE" ],
+      "UpstreamPathTemplate": "/store/usercart",
+      "UpstreamHttpMethod": [ "PUT" ],
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7039
+          "Host": "webstoreapi",
+          "Port": 80
         }
       ],
-      "DownstreamPathTemplate": "/store/usercart/product/{user}"
+      "DownstreamPathTemplate": "/store/usercart"
     }
   ],
   "GlobalConfiguration": {

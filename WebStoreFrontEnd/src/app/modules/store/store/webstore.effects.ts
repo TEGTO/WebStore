@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { addProductToUserCart, addProductToUserCartFailure, addProductToUserCartSuccess, getAllProducts, getAllProductsFailure, getAllProductsSuccess, getUserProductAmount, getUserProductAmountFailure, getUserProductAmountSuccess, getUserProducts, getUserProductsFailure, getUserProductsSuccess, removeProductFromUserCart, removeProductFromUserCartFailure, removeProductFromUserCartSuccess } from "..";
-import { ProductApiService, UserCartApiService } from "../../shared";
+import { ProductApiService, UserCartApiService, UserCartChange, UserCartChangeDto } from "../../shared";
 
 //Products
 @Injectable()
@@ -53,23 +53,37 @@ export class UserCartEffects {
     addProductToUserCart$ = createEffect(() =>
         this.actions$.pipe(
             ofType(addProductToUserCart),
-            mergeMap((action) =>
-                this.apiService.addProductToUserCart(action.userEmail, action.product).pipe(
-                    map(() => addProductToUserCartSuccess({ product: action.product })),
+            mergeMap((action) => {
+                let changeCart = action.userCartChange;
+                let changeCartDto = this.getUserChangeDto(changeCart);
+                return this.apiService.addProductToUserCart(changeCartDto).pipe(
+                    map(() => addProductToUserCartSuccess({ userCartChange: changeCart })),
                     catchError(error => of(addProductToUserCartFailure({ error: error.message })))
-                )
-            )
+                );
+            })
         )
     );
     removeProductFromUserCart$ = createEffect(() =>
         this.actions$.pipe(
             ofType(removeProductFromUserCart),
-            mergeMap((action) =>
-                this.apiService.removeProductFromUserCart(action.userEmail, action.product).pipe(
-                    map(() => removeProductFromUserCartSuccess({ product: action.product })),
+            mergeMap((action) => {
+                let changeCart = action.userCartChange;
+                let changeCartDto = this.getUserChangeDto(changeCart);
+                return this.apiService.removeProductFromUserCart(changeCartDto).pipe(
+                    map(() => removeProductFromUserCartSuccess({ userCartChange: changeCart })),
                     catchError(error => of(removeProductFromUserCartFailure({ error: error.message })))
-                )
-            )
+                );
+            })
         )
     );
+
+    private getUserChangeDto(changeCart: UserCartChange) {
+        let dto: UserCartChangeDto =
+        {
+            userEmail: changeCart.userEmail,
+            productId: changeCart.product.id,
+            amount: changeCart.amount
+        };
+        return dto;
+    }
 }

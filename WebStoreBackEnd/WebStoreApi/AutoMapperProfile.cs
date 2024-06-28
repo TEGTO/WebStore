@@ -10,6 +10,8 @@ namespace AuthenticationWebApi
         {
             CreateMap<Product, ProductDto>();
             CreateMap<ProductDto, Product>();
+            CreateMap<UserCartChange, UserCartChangeDto>();
+            CreateMap<UserCartChangeDto, UserCartChange>();
         }
     }
 }

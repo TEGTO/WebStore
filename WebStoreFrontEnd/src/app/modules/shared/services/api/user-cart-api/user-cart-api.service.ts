@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ProductDataDto } from '../../..';
+import { ProductDataDto, UserCartChangeDto } from '../../..';
 import { BaseApiService } from '../base-api/base-api.service';
 
 @Injectable({
@@ -14,10 +14,10 @@ export class UserCartApiService extends BaseApiService {
   getProductAmountInUserCart(userEmail: string): Observable<number> {
     return this.getHttpClient().get<number>(this.combinePathWithWebStoreApiUrl(`/usercart/amount/${userEmail}`));
   }
-  addProductToUserCart(userEmail: string, product: ProductDataDto) {
-    return this.getHttpClient().post(this.combinePathWithWebStoreApiUrl(`/usercart/product/${userEmail}`), product);
+  addProductToUserCart(userCartChangeDto: UserCartChangeDto) {
+    return this.getHttpClient().post(this.combinePathWithWebStoreApiUrl(`/usercart`), userCartChangeDto);
   }
-  removeProductFromUserCart(userEmail: string, product: ProductDataDto) {
-    return this.getHttpClient().delete(this.combinePathWithWebStoreApiUrl(`/usercart/product/${userEmail}?productId=${product.id}`));
+  removeProductFromUserCart(userCartChangeDto: UserCartChangeDto): Observable<any> {
+    return this.getHttpClient().put(this.combinePathWithWebStoreApiUrl(`/usercart`), userCartChangeDto);
   }
 }

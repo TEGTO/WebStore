@@ -36,18 +36,17 @@ namespace WebStoreApi.Controllers
             return Ok(amount);
         }
         [HttpPost]
-        [Route("product/{userEmail}")]
-        public async Task<IActionResult> AddProductToUserCart([FromRoute] string userEmail, ProductDto productDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddProductToUserCart([FromBody] UserCartChangeDto cartChangeDto, CancellationToken cancellationToken)
         {
-            Product product = mapper.Map<Product>(productDto);
-            await userCartService.AddProductToUserCartAsync(userEmail, product, cancellationToken);
+            UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
+            await userCartService.AddProductToUserCartAsync(cartChange, cancellationToken);
             return Ok();
         }
-        [HttpDelete]
-        [Route("product/{userEmail}")]
-        public async Task<IActionResult> RemoveProductFromUserCart([FromRoute] string userEmail, [FromQuery] int productId, CancellationToken cancellationToken)
+        [HttpPut]
+        public async Task<IActionResult> RemoveProductFromUserCart([FromBody] UserCartChangeDto cartChangeDto, CancellationToken cancellationToken)
         {
-            await userCartService.RemoveProductFromUserCartAsync(userEmail, productId, cancellationToken);
+            UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
+            await userCartService.RemoveProductFromUserCartAsync(cartChange, cancellationToken);
             return Ok();
         }
     }
