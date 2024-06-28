@@ -22,8 +22,6 @@ services:
     build:
       context: .
       dockerfile: AuthenticationWebApi/Dockerfile
-    # ports: 
-    # - 8100:8080
     networks:
       - backend-net
     depends_on:
@@ -35,8 +33,6 @@ services:
     build:
       context: .
       dockerfile: WebStoreApi/Dockerfile
-    # ports: 
-    # - 800:8080
     networks:
       - backend-net
     depends_on:
@@ -58,7 +54,6 @@ services:
 
 networks:
   backend-net:
-
 
 # volumes:
 #   webstore-db:

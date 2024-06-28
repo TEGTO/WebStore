@@ -1,4 +1,5 @@
-﻿using AuthenticationManager.Services;
+﻿using AuthenticationManager.Models;
+using AuthenticationManager.Services;
 using AuthenticationWebApi.Models;
 using AuthenticationWebApi.Models.Dto;
 using AutoMapper;
@@ -6,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Middlewares.Contracts;
-using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 
 namespace AuthenticationWebApi.Controllers
@@ -41,16 +41,13 @@ namespace AuthenticationWebApi.Controllers
             return Created();
         }
         [HttpPost("login")]
-        public async Task<ActionResult<AuthResponseDto>> Login([FromBody] UserAuthenticationDto loginModel)
+        public async Task<ActionResult<TokenDto>> Login([FromBody] UserAuthenticationDto loginModel)
         {
             var user = await userManager.FindByEmailAsync(loginModel.Email);
             if (user == null || !await userManager.CheckPasswordAsync(user, loginModel.Password))
                 return Unauthorized(new ResponseError { StatusCode = HttpStatusCode.Unauthorized.ToString(), Messages = ["Invalid Authentication"] });
-            var signingCredentials = jwtHandler.GetSigningCredentials();
-            var claims = jwtHandler.GetClaims(user);
-            var tokenOptions = jwtHandler.GenerateTokenOptions(signingCredentials, claims);
-            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
-            return Ok(new AuthResponseDto { Token = token, ExpiredOn = tokenOptions.ValidTo });
+            var tokenDto = jwtHandler.CreateToken(user);
+            return Ok(tokenDto);
         }
         [HttpPut("update")]
         [Authorize]

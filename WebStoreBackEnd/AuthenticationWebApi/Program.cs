@@ -94,7 +94,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.ConfigureMigration<AuthIdentityDbContext>();
+app.ConfigureDatabase<AuthIdentityDbContext>();
 
 app.UseHttpsRedirection();
 app.UseExceptionMiddleware();

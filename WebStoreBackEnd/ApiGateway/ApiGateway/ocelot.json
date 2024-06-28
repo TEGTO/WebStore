@@ -4,11 +4,11 @@
     {
       "UpstreamPathTemplate": "/auth/login",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "authenticationwebapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/auth/login"
@@ -17,11 +17,11 @@
     {
       "UpstreamPathTemplate": "/auth/register",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "authenticationwebapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/auth/register"
@@ -30,11 +30,11 @@
     {
       "UpstreamPathTemplate": "/auth/update",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "authenticationwebapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/auth/update"
@@ -47,7 +47,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "webstoreapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/store/product"
@@ -56,11 +56,11 @@
     {
       "UpstreamPathTemplate": "/store/usercart/product/{user}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "webstoreapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/store/usercart/product/{user}"
@@ -69,11 +69,11 @@
     {
       "UpstreamPathTemplate": "/store/usercart/amount/{user}",
       "UpstreamHttpMethod": [ "GET" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "webstoreapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/store/usercart/amount/{user}"
@@ -82,11 +82,11 @@
     {
       "UpstreamPathTemplate": "/store/usercart",
       "UpstreamHttpMethod": [ "POST" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "webstoreapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/store/usercart"
@@ -95,11 +95,11 @@
     {
       "UpstreamPathTemplate": "/store/usercart",
       "UpstreamHttpMethod": [ "PUT" ],
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "webstoreapi",
-          "Port": 80
+          "Port": 8080
         }
       ],
       "DownstreamPathTemplate": "/store/usercart"

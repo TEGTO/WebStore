@@ -1,4 +1,4 @@
 export interface AuthResponseDto {
-    token: string;
-    expiredOn: Date;
+    accessToken: string;
+    refreshToken: string;
 }

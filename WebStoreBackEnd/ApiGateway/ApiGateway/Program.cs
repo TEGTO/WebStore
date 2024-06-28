@@ -19,6 +19,7 @@ builder.Services.AddCors(options =>
         }
     });
 });
+
 builder.Configuration.SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables();

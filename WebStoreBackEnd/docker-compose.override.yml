@@ -7,8 +7,11 @@ services:
       - ASPNETCORE_URLS=http://+:8080;
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__WebStoreConnection=${CONNECTION_STRINGS_WEB_STORE}
-      - EF_MIGRATION=${EF_MIGRATION}
-      - DB_SCHEMA=store
+      - EFCreateDatabase=${EF_CREATE_DB}
+      - JwtSettings__Key=${JWTSETTINGS_KEY}
+      - JwtSettings__Issuer=${JWTSETTINGS_ISSUER}
+      - JwtSettings__ExpiryInMinutes=${JWTSETTINGS_EXPIRY_IN_MINUTES}
+      - JwtSettings__Audience=${JWTSETTINGS_AUDIENCE}
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -19,8 +22,11 @@ services:
       - ASPNETCORE_URLS=http://+:8080;
       - ASPNETCORE_HTTP_PORTS=8080
       - ConnectionStrings__AuthenticationConnection=${CONNECTION_STRINGS_AUTHENTICATION}
-      - EF_MIGRATION=${EF_MIGRATION}
-      - DB_SCHEMA=auth
+      - EFCreateDatabase=${EF_CREATE_DB}
+      - JwtSettings__Key=${JWTSETTINGS_KEY}
+      - JwtSettings__Issuer=${JWTSETTINGS_ISSUER}
+      - JwtSettings__ExpiryInMinutes=${JWTSETTINGS_EXPIRY_IN_MINUTES}
+      - JwtSettings__Audience=${JWTSETTINGS_AUDIENCE}
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

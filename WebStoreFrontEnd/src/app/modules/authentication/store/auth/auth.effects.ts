@@ -39,8 +39,8 @@ export class SignInEffects {
                     map((response) => {
                         let userData: UserAuthData = {
                             isAuthenticated: true,
-                            authToken: response.token,
-                            expiredOn: response.expiredOn,
+                            authToken: response.accessToken,
+                            refreshToken: response.refreshToken,
                             userEmail: action.userAuthData.email
                         }
                         this.localStorage.setItem(this.storageUserAuthDataKey, JSON.stringify(userData));

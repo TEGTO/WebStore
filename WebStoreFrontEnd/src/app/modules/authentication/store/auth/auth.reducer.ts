@@ -27,21 +27,21 @@ export const registrationReducer = createReducer(
 export interface AuthState {
     isAuthenticated: boolean,
     authToken: string,
-    expiredOn: Date,
+    refreshToken: string,
     userEmail: string,
     error: any
 }
 const initialAuthState: AuthState = {
     isAuthenticated: false,
     authToken: "",
-    expiredOn: new Date(),
+    refreshToken: "",
     userEmail: "",
     error: null
 };
 export interface UserAuthData {
     isAuthenticated: boolean,
     authToken: string,
-    expiredOn: Date,
+    refreshToken: string,
     userEmail: string
 }
 export const authReducer = createReducer(
@@ -54,7 +54,7 @@ export const authReducer = createReducer(
         ...state,
         isAuthenticated: true,
         authToken: userAuthData.authToken,
-        expiredOn: userAuthData.expiredOn,
+        refreshToken: userAuthData.refreshToken,
         userEmail: userAuthData.userEmail,
         error: null
     })),
@@ -66,7 +66,7 @@ export const authReducer = createReducer(
         ...state,
         isAuthenticated: userAuthData.isAuthenticated,
         authToken: userAuthData.authToken,
-        expiredOn: userAuthData.expiredOn,
+        refreshToken: userAuthData.refreshToken,
         userEmail: userAuthData.userEmail,
         error: null
     })),

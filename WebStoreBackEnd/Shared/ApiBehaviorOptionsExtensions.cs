@@ -20,7 +20,6 @@ namespace Shared
                     throw new ValidationException(errors);
                 };
             });
-
             return services;
         }
     }

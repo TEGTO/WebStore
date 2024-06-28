@@ -18,7 +18,7 @@ export const selectAuthData: MemoizedSelector<object, UserAuthData> = createSele
     (state: AuthState) => ({
         isAuthenticated: state.isAuthenticated,
         authToken: state.authToken,
-        expiredOn: state.expiredOn,
+        refreshToken: state.refreshToken,
         userEmail: state.userEmail
     })
 );
