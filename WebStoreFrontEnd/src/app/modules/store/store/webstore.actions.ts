@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { ProductDataDto, UserCartChange } from "../../shared";
+import { ProductData, UserCartChange } from "../../shared";
 
 //Products
 export const getAllProducts = createAction(
@@ -7,7 +7,7 @@ export const getAllProducts = createAction(
 );
 export const getAllProductsSuccess = createAction(
     '[WebStore] Get All Products Success',
-    props<{ products: ProductDataDto[] }>()
+    props<{ products: ProductData[] }>()
 );
 export const getAllProductsFailure = createAction(
     '[WebStore] Get All ProductsFailure',
@@ -20,7 +20,7 @@ export const getUserProducts = createAction(
 );
 export const getUserProductsSuccess = createAction(
     '[WebStore] Get User Products In The Cart Success',
-    props<{ products: ProductDataDto[] }>()
+    props<{ products: ProductData[] }>()
 );
 export const getUserProductsFailure = createAction(
     '[WebStore] Get User Products In The Cart Failure',

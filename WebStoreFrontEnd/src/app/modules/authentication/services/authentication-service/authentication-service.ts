@@ -1,17 +1,17 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { UserAuthData } from "../..";
-import { UserAuthenticationDto, UserRegistrationDto, UserUpdateDataDto } from "../../../shared";
+import { AccessTokenDto, UserAuthData, UserAuthenticationRequest, UserRegistrationRequest, UserUpdateDataRequest } from "../../../shared";
 
 @Injectable({
     providedIn: 'root'
 })
 export abstract class AuthenticationService {
-    abstract registerUser(userRegistrationData: UserRegistrationDto): Observable<boolean>;
+    abstract registerUser(userRegistrationData: UserRegistrationRequest): Observable<boolean>;
     abstract registerUserGetErrors(): Observable<any>;
-    abstract singInUser(userAuthData: UserAuthenticationDto): Observable<UserAuthData>;
+    abstract singInUser(userAuthData: UserAuthenticationRequest): Observable<UserAuthData>;
     abstract getAuthUserData(): Observable<UserAuthData>;
     abstract logOutUser(): Observable<UserAuthData>;
-    abstract updateUser(updateUserData: UserUpdateDataDto): Observable<boolean>;
+    abstract refreshToken(accessToken: AccessTokenDto): Observable<UserAuthData>;
+    abstract updateUser(updateUserData: UserUpdateDataRequest): Observable<boolean>;
     abstract getAuthUserErrors(): Observable<any>;
 }

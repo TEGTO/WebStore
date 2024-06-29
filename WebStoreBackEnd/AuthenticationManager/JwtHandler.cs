@@ -17,14 +17,14 @@ namespace AuthenticationManager.Services
             this.jwtSettings = jwtSettings;
         }
 
-        public TokenDto CreateToken(IdentityUser user)
+        public AccessTokenData CreateToken(IdentityUser user)
         {
             var signingCredentials = GetSigningCredentials();
             var claims = GetClaims(user);
             var tokenOptions = GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
             var refreshToken = GenerateRefreshToken();
-            return new TokenDto { AccessToken = token, RefreshToken = refreshToken };
+            return new AccessTokenData { AccessToken = token, RefreshToken = refreshToken };
         }
         public SigningCredentials GetSigningCredentials()
         {
@@ -36,7 +36,8 @@ namespace AuthenticationManager.Services
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, user.UserName)
             };
             return claims;
         }
@@ -59,7 +60,7 @@ namespace AuthenticationManager.Services
                 return Convert.ToBase64String(randomNumber);
             }
         }
-        private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
@@ -72,7 +73,7 @@ namespace AuthenticationManager.Services
                 ValidateIssuerSigningKey = true
             };
             var tokenHandler = new JwtSecurityTokenHandler();
-            SecurityToken securityToken = null;
+            SecurityToken securityToken;
             var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
@@ -81,7 +82,7 @@ namespace AuthenticationManager.Services
             }
             return principal;
         }
-        public TokenDto RefreshToken(IdentityUser user, TokenDto token)
+        public AccessTokenData RefreshToken(IdentityUser user, AccessTokenData token)
         {
             var principal = GetPrincipalFromExpiredToken(token.AccessToken);
             return CreateToken(user);

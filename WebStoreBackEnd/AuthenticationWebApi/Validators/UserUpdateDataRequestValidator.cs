@@ -3,9 +3,9 @@ using FluentValidation;
 
 namespace AuthenticationWebApi.Validators
 {
-    public class UserUpdateDataDtoValidator : AbstractValidator<UserUpdateDataDto>
+    public class UserUpdateDataRequestValidator : AbstractValidator<UserUpdateDataRequest>
     {
-        public UserUpdateDataDtoValidator()
+        public UserUpdateDataRequestValidator()
         {
             RuleFor(x => x.OldEmail).NotNull().NotEmpty().EmailAddress();
             RuleFor(x => x.NewEmail).EmailAddress().When(x => !string.IsNullOrEmpty(x.NewEmail));

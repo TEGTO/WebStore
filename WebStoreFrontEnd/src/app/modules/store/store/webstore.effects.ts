@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap, of } from "rxjs";
 import { addProductToUserCart, addProductToUserCartFailure, addProductToUserCartSuccess, getAllProducts, getAllProductsFailure, getAllProductsSuccess, getUserProductAmount, getUserProductAmountFailure, getUserProductAmountSuccess, getUserProducts, getUserProductsFailure, getUserProductsSuccess, removeProductFromUserCart, removeProductFromUserCartFailure, removeProductFromUserCartSuccess } from "..";
-import { ProductApiService, UserCartApiService, UserCartChange, UserCartChangeDto } from "../../shared";
+import { ProductApiService, UserCartApiService, UserCartChange, UserCartChangeRequest } from "../../shared";
 
 //Products
 @Injectable()
@@ -78,7 +78,7 @@ export class UserCartEffects {
     );
 
     private getUserChangeDto(changeCart: UserCartChange) {
-        let dto: UserCartChangeDto =
+        let dto: UserCartChangeRequest =
         {
             userEmail: changeCart.userEmail,
             productId: changeCart.product.id,

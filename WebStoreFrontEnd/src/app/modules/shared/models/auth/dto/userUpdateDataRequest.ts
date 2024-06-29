@@ -1,4 +1,4 @@
-export interface UserUpdateDataDto {
+export interface UserUpdateDataRequest {
     oldEmail: string;
     newEmail: string;
     oldPassword: string;

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthenticationService } from '../..';
-import { UserUpdateDataDto } from '../../../shared';
+import { UserUpdateDataRequest } from '../../../shared';
 
 @Component({
   selector: 'app-authenticated',
@@ -40,7 +40,7 @@ export class AuthenticatedComponent implements OnInit {
   updateUser() {
     if (this.formGroup.valid) {
       const formValues = { ...this.formGroup.value };
-      const userData: UserUpdateDataDto = {
+      const userData: UserUpdateDataRequest = {
         oldEmail: this.userEmail,
         newEmail: formValues.email,
         oldPassword: formValues.oldPassword,

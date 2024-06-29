@@ -1,6 +1,6 @@
-﻿namespace AuthenticationWebApi.Models.Dto
+﻿namespace AuthenticationWebApi.Models
 {
-    public class UserUpdateDataDto
+    public class UserDataUpdate
     {
         public string? OldEmail { get; set; }
         public string? NewEmail { get; set; }

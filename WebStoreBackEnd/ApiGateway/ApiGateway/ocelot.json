@@ -39,6 +39,19 @@
       ],
       "DownstreamPathTemplate": "/auth/update"
     },
+    // Authentication Web API - Refresh
+    {
+      "UpstreamPathTemplate": "/auth/refresh",
+      "UpstreamHttpMethod": [ "POST" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authenticationwebapi",
+          "Port": 8080
+        }
+      ],
+      "DownstreamPathTemplate": "/auth/refresh"
+    },
     // Web Store API - GetAllProducts
     {
       "UpstreamPathTemplate": "/store/product",

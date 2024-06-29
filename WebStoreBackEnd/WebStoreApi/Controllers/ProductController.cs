@@ -20,10 +20,10 @@ namespace WebStoreApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetAllProducts(CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetAllProducts(CancellationToken cancellationToken)
         {
             IEnumerable<Product> products = await productsService.GetAllProductsAsync(cancellationToken);
-            return Ok(products.Select(mapper.Map<ProductDto>));
+            return Ok(products.Select(mapper.Map<ProductResponse>));
         }
     }
 }

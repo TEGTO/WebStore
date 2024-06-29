@@ -1,11 +1,11 @@
-﻿using FluentValidation;
-using AuthenticationWebApi.Models.Dto;
+﻿using AuthenticationWebApi.Models.Dto;
+using FluentValidation;
 
 namespace AuthenticationWebApi.Validators
 {
-    public class UserRegistrationDtoValidator : AbstractValidator<UserRegistrationDto>
+    public class UserRegistrationRequestValidator : AbstractValidator<UserRegistrationRequest>
     {
-        public UserRegistrationDtoValidator()
+        public UserRegistrationRequestValidator()
         {
             RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress();
             RuleFor(x => x.Password).NotNull().NotEmpty().MinimumLength(8);

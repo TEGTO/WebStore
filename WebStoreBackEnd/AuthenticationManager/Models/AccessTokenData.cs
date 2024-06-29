@@ -1,6 +1,6 @@
-﻿namespace AuthenticationWebApi.Models.Dto
+﻿namespace AuthenticationManager.Models
 {
-    public class AuthResponseDto
+    public class AccessTokenData
     {
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }

@@ -1,7 +1,7 @@
-import { ProductDataDto } from "./dto/productDataDto";
+import { ProductData } from "./productDataDto";
 
 export interface UserCartChange {
     userEmail: string;
-    product: ProductDataDto;
+    product: ProductData;
     amount: number;
 }

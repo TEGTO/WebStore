@@ -23,10 +23,10 @@ namespace WebStoreApi.Controllers
 
         [HttpGet]
         [Route("product/{userEmail}")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetProductsInUserCart([FromRoute] string userEmail, CancellationToken cancellationToken)
+        public async Task<ActionResult<IEnumerable<ProductResponse>>> GetProductsInUserCart([FromRoute] string userEmail, CancellationToken cancellationToken)
         {
             IEnumerable<Product> products = await userCartService.GetProductsInUserCartAsync(userEmail, cancellationToken);
-            return Ok(products.Select(mapper.Map<ProductDto>));
+            return Ok(products.Select(mapper.Map<ProductResponse>));
         }
         [HttpGet]
         [Route("amount/{userEmail}")]
@@ -36,14 +36,14 @@ namespace WebStoreApi.Controllers
             return Ok(amount);
         }
         [HttpPost]
-        public async Task<IActionResult> AddProductToUserCart([FromBody] UserCartChangeDto cartChangeDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddProductToUserCart([FromBody] UserCartChangeRequest cartChangeDto, CancellationToken cancellationToken)
         {
             UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
             await userCartService.AddProductToUserCartAsync(cartChange, cancellationToken);
             return Ok();
         }
         [HttpPut]
-        public async Task<IActionResult> RemoveProductFromUserCart([FromBody] UserCartChangeDto cartChangeDto, CancellationToken cancellationToken)
+        public async Task<IActionResult> RemoveProductFromUserCart([FromBody] UserCartChangeRequest cartChangeDto, CancellationToken cancellationToken)
         {
             UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
             await userCartService.RemoveProductFromUserCartAsync(cartChange, cancellationToken);

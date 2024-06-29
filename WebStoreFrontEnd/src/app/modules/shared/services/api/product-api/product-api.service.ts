@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProductDataDto } from '../../..';
+import { Observable, catchError } from 'rxjs';
+import { ProductData } from '../../..';
 import { BaseApiService } from '../base-api/base-api.service';
 
 @Injectable({
@@ -8,7 +8,9 @@ import { BaseApiService } from '../base-api/base-api.service';
 })
 export class ProductApiService extends BaseApiService {
 
-  getAllProducts(): Observable<ProductDataDto[]> {
-    return this.getHttpClient().get<ProductDataDto[]>(this.combinePathWithWebStoreApiUrl("/product"));
+  getAllProducts(): Observable<ProductData[]> {
+    return this.getHttpClient().get<ProductData[]>(this.combinePathWithWebStoreApiUrl("/product")).pipe(
+      catchError((resp) => this.handleError(resp))
+    );
   }
 }

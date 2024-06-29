@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { ProductDataDto, UserCartChangeDto } from '../../..';
+import { Observable, catchError } from 'rxjs';
+import { ProductData, UserCartChangeRequest } from '../../..';
 import { BaseApiService } from '../base-api/base-api.service';
 
 @Injectable({
@@ -8,16 +8,24 @@ import { BaseApiService } from '../base-api/base-api.service';
 })
 export class UserCartApiService extends BaseApiService {
 
-  getProductsInUserCart(userEmail: string): Observable<ProductDataDto[]> {
-    return this.getHttpClient().get<ProductDataDto[]>(this.combinePathWithWebStoreApiUrl(`/usercart/product/${userEmail}`));
+  getProductsInUserCart(userEmail: string): Observable<ProductData[]> {
+    return this.getHttpClient().get<ProductData[]>(this.combinePathWithWebStoreApiUrl(`/usercart/product/${userEmail}`)).pipe(
+      catchError((resp) => this.handleError(resp))
+    );
   }
   getProductAmountInUserCart(userEmail: string): Observable<number> {
-    return this.getHttpClient().get<number>(this.combinePathWithWebStoreApiUrl(`/usercart/amount/${userEmail}`));
+    return this.getHttpClient().get<number>(this.combinePathWithWebStoreApiUrl(`/usercart/amount/${userEmail}`)).pipe(
+      catchError((resp) => this.handleError(resp))
+    );
   }
-  addProductToUserCart(userCartChangeDto: UserCartChangeDto) {
-    return this.getHttpClient().post(this.combinePathWithWebStoreApiUrl(`/usercart`), userCartChangeDto);
+  addProductToUserCart(userCartChangeDto: UserCartChangeRequest) {
+    return this.getHttpClient().post(this.combinePathWithWebStoreApiUrl(`/usercart`), userCartChangeDto).pipe(
+      catchError((resp) => this.handleError(resp))
+    );
   }
-  removeProductFromUserCart(userCartChangeDto: UserCartChangeDto): Observable<any> {
-    return this.getHttpClient().put(this.combinePathWithWebStoreApiUrl(`/usercart`), userCartChangeDto);
+  removeProductFromUserCart(userCartChangeDto: UserCartChangeRequest): Observable<any> {
+    return this.getHttpClient().put(this.combinePathWithWebStoreApiUrl(`/usercart`), userCartChangeDto).pipe(
+      catchError((resp) => this.handleError(resp))
+    );
   }
 }

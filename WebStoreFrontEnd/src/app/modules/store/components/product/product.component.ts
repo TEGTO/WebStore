@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UserAuthData } from '../../../authentication';
-import { ProductDataDto, UserCartChange } from '../../../shared';
+import { ProductData, UserAuthData, UserCartChange } from '../../../shared';
 import { UserCartService } from '../../services/user-cart-service/user-cart-service';
 
 @Component({
@@ -10,7 +9,7 @@ import { UserCartService } from '../../services/user-cart-service/user-cart-serv
 })
 export class ProductComponent {
   @Input({ required: true })
-  product!: ProductDataDto;
+  product!: ProductData;
   @Input({ required: true })
   userAuthData!: UserAuthData;
 

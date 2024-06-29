@@ -26,31 +26,31 @@ namespace Middlewares
             }
             catch (ValidationException ex)
             {
-                httpContext.Response.ContentType = "application/json";
-                httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 var errors = ex.Errors
                  .Select(e => $"{e.PropertyName}: {e.ErrorMessage}")
                  .ToArray();
-                var responseError = new ResponseError
-                {
-                    StatusCode = $"{(int)HttpStatusCode.BadRequest}",
-                    Messages = errors
-                };
-                logger.LogError(ex, responseError.ToString());
-                await httpContext.Response.WriteAsync(responseError.ToString());
+                await SetError(httpContext, HttpStatusCode.BadRequest, ex, errors);
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                await SetError(httpContext, HttpStatusCode.Unauthorized, ex, [ex.Message]);
             }
             catch (Exception ex)
             {
-                httpContext.Response.ContentType = "application/json";
-                httpContext.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                var responseError = new ResponseError
-                {
-                    StatusCode = httpContext.Response.StatusCode.ToString(),
-                    Messages = new string[] { ex.Message }
-                };
-                logger.LogError(ex, responseError.ToString());
-                await httpContext.Response.WriteAsync(responseError.ToString());
+                await SetError(httpContext, HttpStatusCode.InternalServerError, ex, [ex.Message]);
             }
+        }
+        private async Task SetError(HttpContext httpContext, HttpStatusCode httpStatusCode, Exception ex, string[] messages)
+        {
+            httpContext.Response.ContentType = "application/json";
+            httpContext.Response.StatusCode = (int)httpStatusCode;
+            var responseError = new ResponseError
+            {
+                StatusCode = httpContext.Response.StatusCode.ToString(),
+                Messages = messages
+            };
+            logger.LogError(ex, responseError.ToString());
+            await httpContext.Response.WriteAsync(responseError.ToString());
         }
     }
     public static class ExceptionMiddlewareExtensions

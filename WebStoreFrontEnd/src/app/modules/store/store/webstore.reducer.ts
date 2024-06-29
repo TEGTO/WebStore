@@ -1,10 +1,10 @@
 import { createReducer, on } from "@ngrx/store";
 import { addProductToUserCartFailure, addProductToUserCartSuccess, getAllProductsFailure, getAllProductsSuccess, getUserProductAmountFailure, getUserProductAmountSuccess, getUserProductsFailure, getUserProductsSuccess, removeProductFromUserCartFailure, removeProductFromUserCartSuccess } from "..";
-import { ProductDataDto } from "../../shared";
+import { ProductData } from "../../shared";
 
 //Products
 export interface ProductState {
-    products: ProductDataDto[],
+    products: ProductData[],
     error: any
 }
 const initialProductState: ProductState = {
@@ -26,7 +26,7 @@ export const productReducer = createReducer(
 );
 //User Cart
 export interface UserCartState {
-    productsInCart: ProductDataDto[],
+    productsInCart: ProductData[],
     productsInCartAmount: number,
     error: any
 }

@@ -1,5 +1,5 @@
-﻿using HorseBets.Api.Shared.Services;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Shared.Services;
 using WebStoreApi.Data;
 using WebStoreApi.Models;
 

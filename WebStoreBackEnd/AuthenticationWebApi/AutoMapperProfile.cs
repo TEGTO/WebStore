@@ -1,4 +1,5 @@
-﻿using AuthenticationWebApi.Models;
+﻿using AuthenticationManager.Models;
+using AuthenticationWebApi.Models;
 using AuthenticationWebApi.Models.Dto;
 using AutoMapper;
 
@@ -8,8 +9,13 @@ namespace AuthenticationWebApi
     {
         public AutoMapperProfile()
         {
-            CreateMap<User, UserRegistrationDto>();
-            CreateMap<UserRegistrationDto, User>().ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            CreateMap<User, UserRegistrationRequest>();
+            CreateMap<UserRegistrationRequest, User>()
+                .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
+            CreateMap<AccessTokenData, AccessTokenDto>();
+            CreateMap<AccessTokenDto, AccessTokenData>();
+            CreateMap<UserUpdateDataRequest, UserDataUpdate>();
+            CreateMap<UserDataUpdate, UserUpdateDataRequest>();
         }
     }
 }

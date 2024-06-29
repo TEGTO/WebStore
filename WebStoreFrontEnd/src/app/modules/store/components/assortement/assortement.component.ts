@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../..';
-import { AuthenticationService, UserAuthData } from '../../../authentication';
-import { ProductDataDto } from '../../../shared';
+import { AuthenticationService } from '../../../authentication';
+import { ProductData, UserAuthData } from '../../../shared';
 
 @Component({
   selector: 'app-assortement',
@@ -9,7 +9,7 @@ import { ProductDataDto } from '../../../shared';
   styleUrl: './assortement.component.scss'
 })
 export class AssortementComponent implements OnInit {
-  products: ProductDataDto[] = [];
+  products: ProductData[] = [];
   userAuthData!: UserAuthData;
 
   constructor(private authService: AuthenticationService, private productService: ProductService) {

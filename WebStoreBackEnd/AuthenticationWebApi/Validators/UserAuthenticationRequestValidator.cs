@@ -3,9 +3,9 @@ using AuthenticationWebApi.Models.Dto;
 
 namespace AuthenticationWebApi.Validators
 {
-    public class UserAuthenticationDtoValidator : AbstractValidator<UserAuthenticationDto>
+    public class UserAuthenticationRequestValidator : AbstractValidator<UserAuthenticationRequest>
     {
-        public UserAuthenticationDtoValidator()
+        public UserAuthenticationRequestValidator()
         {
             RuleFor(x => x.Email).NotNull().NotEmpty().EmailAddress();
             RuleFor(x => x.Password).NotNull().NotEmpty().MinimumLength(8);

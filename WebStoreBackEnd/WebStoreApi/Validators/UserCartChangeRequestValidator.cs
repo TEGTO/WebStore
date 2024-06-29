@@ -3,9 +3,9 @@ using WebStoreApi.Models.Dto;
 
 namespace AuthenticationWebApi.Validators
 {
-    public class UserCartChangeDtoValidator : AbstractValidator<UserCartChangeDto>
+    public class UserCartChangeRequestValidator : AbstractValidator<UserCartChangeRequest>
     {
-        public UserCartChangeDtoValidator()
+        public UserCartChangeRequestValidator()
         {
             RuleFor(x => x.UserEmail).NotNull().NotEmpty().EmailAddress();
             RuleFor(x => x.ProductId).GreaterThanOrEqualTo(0);

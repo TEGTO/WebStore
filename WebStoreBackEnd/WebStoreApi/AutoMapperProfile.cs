@@ -8,10 +8,10 @@ namespace AuthenticationWebApi
     {
         public AutoMapperProfile()
         {
-            CreateMap<Product, ProductDto>();
-            CreateMap<ProductDto, Product>();
-            CreateMap<UserCartChange, UserCartChangeDto>();
-            CreateMap<UserCartChangeDto, UserCartChange>();
+            CreateMap<Product, ProductResponse>();
+            CreateMap<ProductResponse, Product>();
+            CreateMap<UserCartChange, UserCartChangeRequest>();
+            CreateMap<UserCartChangeRequest, UserCartChange>();
         }
     }
 }

@@ -3,6 +3,7 @@ using AuthenticationManager.Models;
 using AuthenticationManager.Services;
 using AuthenticationWebApi.Data;
 using AuthenticationWebApi.Models;
+using AuthenticationWebApi.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Identity;
@@ -41,6 +42,8 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddCustomJwtAuthentication(jwtSettings);
+
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 

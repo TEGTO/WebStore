@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { UserAuthenticationDto } from '../../../shared';
+import { UserAuthenticationRequest } from '../../../shared';
 import { AuthenticationDialogManager, AuthenticationService, RegisterComponent } from '../../index';
 
 @Component({
@@ -30,7 +30,7 @@ export class LoginComponent {
   signInUser() {
     if (this.formGroup.valid) {
       const formValues = { ...this.formGroup.value };
-      const userData: UserAuthenticationDto = {
+      const userData: UserAuthenticationRequest = {
         email: formValues.email,
         password: formValues.password,
       };

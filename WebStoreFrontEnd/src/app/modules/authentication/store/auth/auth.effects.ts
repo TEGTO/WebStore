@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, map, mergeMap, of } from "rxjs";
-import { UserAuthData, getAuthUserData, getAuthUserDataSuccess, logOutUser, logOutUserSuccess, registerFailure, registerSuccess, registerUser, signInUser, signInUserFailure, signInUserSuccess, updateUserData, updateUserDataFailure, updateUserDataSuccess } from "../..";
-import { AuthenticationApiService } from "../../../shared";
+import { getAuthUserData, getAuthUserDataSuccess, logOutUser, logOutUserSuccess, refreshAccessToken, refreshAccessTokenFailure, refreshAccessTokenSuccess, registerFailure, registerSuccess, registerUser, signInUser, signInUserFailure, signInUserSuccess, updateUserData, updateUserDataFailure, updateUserDataSuccess } from "../..";
+import { AuthenticationApiService, UserAuthData } from "../../../shared";
 import { LocalStorageService } from "../../../shared/services/local-storage/local-storage.service";
 
 //Registration
@@ -41,6 +41,7 @@ export class SignInEffects {
                             isAuthenticated: true,
                             authToken: response.accessToken,
                             refreshToken: response.refreshToken,
+                            refreshTokenExpiryDate: response.refreshTokenExpiryDate,
                             userEmail: action.userAuthData.email
                         }
                         this.localStorage.setItem(this.storageUserAuthDataKey, JSON.stringify(userData));
@@ -76,6 +77,28 @@ export class SignInEffects {
                 }
                 return of(logOutUserSuccess());
             })
+        )
+    );
+    refreshToken$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(refreshAccessToken),
+            mergeMap((action) =>
+                this.apiService.refreshToken(action.accessToken).pipe(
+                    map((response) => {
+                        let json = this.localStorage.getItem(this.storageUserAuthDataKey);
+                        if (json !== null) {
+                            let userData = JSON.parse(json) as UserAuthData;
+                            userData.authToken = response.accessToken;
+                            this.localStorage.setItem(this.storageUserAuthDataKey, JSON.stringify(userData));
+                        }
+                        return refreshAccessTokenSuccess({ accessToken: response });
+                    }),
+                    catchError(error => {
+                        this.localStorage.removeItem(this.storageUserAuthDataKey);
+                        return of(refreshAccessTokenFailure({ error: error.message }));
+                    })
+                )
+            )
         )
     );
     updateUser$ = createEffect(() =>

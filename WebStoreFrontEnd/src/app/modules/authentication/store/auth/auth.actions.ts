@@ -1,11 +1,10 @@
 import { createAction, props } from "@ngrx/store";
-import { UserAuthData } from "../..";
-import { UserAuthenticationDto, UserRegistrationDto, UserUpdateDataDto } from "../../../shared";
+import { AccessTokenDto, UserAuthData, UserAuthenticationRequest, UserRegistrationRequest, UserUpdateDataRequest } from "../../../shared";
 
 //Registration
 export const registerUser = createAction(
     '[Registration] Register New User',
-    props<{ userRegistrationData: UserRegistrationDto }>()
+    props<{ userRegistrationData: UserRegistrationRequest }>()
 );
 export const registerSuccess = createAction(
     '[Registration] Register New User Success'
@@ -17,7 +16,7 @@ export const registerFailure = createAction(
 //Auth
 export const signInUser = createAction(
     '[Auth] Sing In By User Data',
-    props<{ userAuthData: UserAuthenticationDto }>()
+    props<{ userAuthData: UserAuthenticationRequest }>()
 );
 export const signInUserSuccess = createAction(
     '[Auth] Sing In By User Data Success',
@@ -43,13 +42,26 @@ export const logOutUserSuccess = createAction(
     '[Auth] Log out Authenticated User Success'
 );
 
+export const refreshAccessToken = createAction(
+    '[Auth] Refresh Access Token',
+    props<{ accessToken: AccessTokenDto }>()
+);
+export const refreshAccessTokenSuccess = createAction(
+    '[Auth] Refresh Access Token Success',
+    props<{ accessToken: AccessTokenDto }>()
+);
+export const refreshAccessTokenFailure = createAction(
+    '[Auth] Refresh Access Token  Failure',
+    props<{ error: any }>()
+);
+
 export const updateUserData = createAction(
     '[Auth] Update Authenticated User',
-    props<{ userUpdateData: UserUpdateDataDto }>()
+    props<{ userUpdateData: UserUpdateDataRequest }>()
 );
 export const updateUserDataSuccess = createAction(
     '[Auth] Update Authenticated User Success',
-    props<{ userUpdateData: UserUpdateDataDto }>()
+    props<{ userUpdateData: UserUpdateDataRequest }>()
 );
 export const updateUserDataFailure = createAction(
     '[Auth] Update Authenticated User Failure',

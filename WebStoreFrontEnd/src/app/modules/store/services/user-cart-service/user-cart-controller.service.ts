@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { addProductToUserCart, getUserProductAmount, getUserProducts, removeProductFromUserCart, selectUserProducts, selectUserProductsAmount } from '../..';
-import { ProductDataDto, UserCartChange } from '../../../shared';
+import { ProductData, UserCartChange } from '../../../shared';
 import { UserCartService } from './user-cart-service';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class UserCartControllerService implements UserCartService {
 
   constructor(private store: Store) { }
 
-  getUserCartProducts(userEmail: string): Observable<ProductDataDto[]> {
+  getUserCartProducts(userEmail: string): Observable<ProductData[]> {
     this.store.dispatch(getUserProducts({ userEmail: userEmail }));
     return this.store.select(selectUserProducts);
   }

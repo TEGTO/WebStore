@@ -6,7 +6,15 @@ import { CustomErrorHandler } from './custom-error-handler';
 })
 export class ErrorHandlerService extends CustomErrorHandler {
 
-  override handleError(error: any): void {
-    console.log(error.messages);
+  override handleError(error: any): string {
+    let errorMessage = 'An unknown error occurred!';
+    if (error.error) {
+      if (error.error.messages)
+        errorMessage = error.error.messages.join('\n');
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+    console.log(errorMessage);
+    return errorMessage;
   }
 }

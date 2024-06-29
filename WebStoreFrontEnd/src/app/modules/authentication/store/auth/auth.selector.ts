@@ -1,5 +1,6 @@
 import { MemoizedSelector, createFeatureSelector, createSelector } from "@ngrx/store";
-import { AuthState, RegistrationState, UserAuthData } from "../..";
+import { AuthState, RegistrationState } from "../..";
+import { UserAuthData } from "../../../shared";
 
 //Registration
 export const selectRegistrationState = createFeatureSelector<RegistrationState>('registration');
@@ -19,6 +20,7 @@ export const selectAuthData: MemoizedSelector<object, UserAuthData> = createSele
         isAuthenticated: state.isAuthenticated,
         authToken: state.authToken,
         refreshToken: state.refreshToken,
+        refreshTokenExpiryDate: state.refreshTokenExpiryDate,
         userEmail: state.userEmail
     })
 );

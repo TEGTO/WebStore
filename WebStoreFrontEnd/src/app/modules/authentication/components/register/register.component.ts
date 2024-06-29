@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthenticationService, confirmPasswordValidator } from '../..';
-import { UserRegistrationDto } from '../../../shared';
+import { UserRegistrationRequest } from '../../../shared';
 
 @Component({
   selector: 'app-register',
@@ -28,7 +28,7 @@ export class RegisterComponent {
   registerUser() {
     if (this.formGroup.valid) {
       const formValues = { ...this.formGroup.value };
-      const userData: UserRegistrationDto = {
+      const userData: UserRegistrationRequest = {
         email: formValues.email,
         password: formValues.password,
         confirmPassword: formValues.passwordConfirm

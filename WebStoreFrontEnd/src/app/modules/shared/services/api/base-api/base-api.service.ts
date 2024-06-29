@@ -23,7 +23,7 @@ export class BaseApiService {
     return this.urlDefiner.combineWithWebStorepiUrl(path);
   }
   protected handleError(error: any) {
-    this.errorHandler.handleError(error);
-    return throwError(() => new Error(error.messages.join('\n')));
+    let message = this.errorHandler.handleError(error);
+    return throwError(() => new Error(message));
   }
 }

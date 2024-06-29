@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace HorseBets.Api.Shared.Services
+namespace Shared.Services
 {
     public abstract class ServiceDbBase<T> where T : DbContext
     {

@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { ProductDataDto } from "../../../shared";
+import { ProductData } from "../../../shared";
 
 @Injectable({
     providedIn: 'root'
 })
 export abstract class ProductService {
-    abstract getAllProducts(): Observable<ProductDataDto[]>;
+    abstract getAllProducts(): Observable<ProductData[]>;
 }

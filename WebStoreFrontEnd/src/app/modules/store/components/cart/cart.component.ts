@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserCartService } from '../..';
-import { AuthenticationService, UserAuthData } from '../../../authentication';
-import { ProductDataDto, RedirectorService } from '../../../shared';
+import { AuthenticationService } from '../../../authentication';
+import { ProductData, RedirectorService, UserAuthData } from '../../../shared';
 
 @Component({
   selector: 'store-cart',
@@ -9,8 +9,8 @@ import { ProductDataDto, RedirectorService } from '../../../shared';
   styleUrl: './cart.component.scss'
 })
 export class CartComponent implements OnInit {
-  products: ProductDataDto[] = [];
-  productTypes: ProductDataDto[][] = [];
+  products: ProductData[] = [];
+  productTypes: ProductData[][] = [];
   userAuthData!: UserAuthData;
 
   get totalPrice(): number {
@@ -33,7 +33,7 @@ export class CartComponent implements OnInit {
       this.userAuthData = authData;
       this.userCartService.getUserCartProducts(authData.userEmail).subscribe(products => {
         this.products = products;
-        let types = new Map<number, ProductDataDto[]>();
+        let types = new Map<number, ProductData[]>();
         products.map(x => x.id).forEach(productId => {
           if (!types.has(productId))
             types.set(productId, products.filter(x => x.id == productId));
