@@ -1,4 +1,4 @@
-﻿using WebStoreApi.Entities;
+﻿using WebStoreApi.Domain.Entities;
 
 namespace WebStoreApi.Services
 {

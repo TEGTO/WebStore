@@ -1,4 +1,5 @@
-﻿using AuthenticationManager.Models;
+﻿using AuthenticationManager.Configuration;
+using AuthenticationManager.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

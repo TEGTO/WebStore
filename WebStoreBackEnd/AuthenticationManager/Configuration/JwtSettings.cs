@@ -1,4 +1,4 @@
-﻿namespace AuthenticationManager.Models
+﻿namespace AuthenticationManager.Configuration
 {
     public class JwtSettings
     {

@@ -1,4 +1,4 @@
-﻿using AuthenticationWebApi.Entities;
+﻿using AuthenticationWebApi.Domain.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

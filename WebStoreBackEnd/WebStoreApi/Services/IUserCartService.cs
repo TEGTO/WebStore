@@ -1,5 +1,5 @@
-﻿using WebStoreApi.Dtos.ServiceDtos;
-using WebStoreApi.Entities;
+﻿using WebStoreApi.Domain.Entities;
+using WebStoreApi.Domain.Models;
 
 namespace WebStoreApi.Services
 {
@@ -7,7 +7,7 @@ namespace WebStoreApi.Services
     {
         public Task<IEnumerable<Product>> GetProductsInUserCartAsync(string user, CancellationToken cancellationToken);
         public Task<int> GetProductsInUserCartAmountAsync(string user, CancellationToken cancellationToken);
-        public Task AddProductToUserCartAsync(UserCartChangeServiceRequest changeRequest, CancellationToken cancellationToken);
-        public Task RemoveProductFromUserCartAsync(UserCartChangeServiceRequest changeRequest, CancellationToken cancellationToken);
+        public Task AddProductToUserCartAsync(UserCartChange changeData, CancellationToken cancellationToken);
+        public Task RemoveProductFromUserCartAsync(UserCartChange changeData, CancellationToken cancellationToken);
     }
 }

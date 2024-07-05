@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using WebStoreApi.Dtos.ControllerDtos;
-using WebStoreApi.Dtos.ServiceDtos;
-using WebStoreApi.Entities;
+using WebStoreApi.Domain.Dtos;
+using WebStoreApi.Domain.Entities;
+using WebStoreApi.Domain.Models;
 
-namespace AuthenticationWebApi
+namespace WebStoreApi
 {
     public class AutoMapperProfile : Profile
     {
@@ -11,8 +11,8 @@ namespace AuthenticationWebApi
         {
             CreateMap<Product, ProductResponse>();
             CreateMap<ProductResponse, Product>();
-            CreateMap<UserCartChangeServiceRequest, UserCartChangeRequest>();
-            CreateMap<UserCartChangeRequest, UserCartChangeServiceRequest>();
+            CreateMap<UserCartChange, UserCartChangeRequest>();
+            CreateMap<UserCartChangeRequest, UserCartChange>();
         }
     }
 }

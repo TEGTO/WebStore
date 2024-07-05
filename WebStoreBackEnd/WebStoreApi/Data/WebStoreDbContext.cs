@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebStoreApi.Entities;
+using WebStoreApi.Domain.Entities;
 
 namespace WebStoreApi.Data
 {

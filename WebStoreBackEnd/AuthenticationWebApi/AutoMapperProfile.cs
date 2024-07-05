@@ -1,7 +1,7 @@
 ﻿using AuthenticationManager.Models;
-using AuthenticationWebApi.Dtos.ControllerDtos;
-using AuthenticationWebApi.Dtos.ServiceDtos;
-using AuthenticationWebApi.Entities;
+using AuthenticationWebApi.Domain.Dtos;
+using AuthenticationWebApi.Domain.Entities;
+using AuthenticationWebApi.Domain.Models;
 using AutoMapper;
 
 namespace AuthenticationWebApi
@@ -15,7 +15,7 @@ namespace AuthenticationWebApi
                 .ForMember(u => u.UserName, opt => opt.MapFrom(x => x.Email));
             CreateMap<AccessTokenData, AccessTokenDto>();
             CreateMap<AccessTokenDto, AccessTokenData>();
-            CreateMap<UserUpdateDataRequest, UserUpdateServiceRequest>();
+            CreateMap<UserUpdateDataRequest, UserUpdateData>();
 
         }
     }

@@ -1,7 +1,7 @@
 ﻿using AuthenticationManager.Models;
 using AuthenticationManager.Services;
-using AuthenticationWebApi.Dtos.ServiceDtos;
-using AuthenticationWebApi.Entities;
+using AuthenticationWebApi.Domain.Entities;
+using AuthenticationWebApi.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthenticationWebApi.Services
@@ -34,20 +34,20 @@ namespace AuthenticationWebApi.Services
             await userManager.UpdateAsync(user);
             return token;
         }
-        public async Task<List<IdentityError>> UpdateUser(UserUpdateServiceRequest updateRequest)
+        public async Task<List<IdentityError>> UpdateUser(UserUpdateData updateData)
         {
-            var user = await userManager.FindByEmailAsync(updateRequest.OldEmail);
+            var user = await userManager.FindByEmailAsync(updateData.OldEmail);
             List<IdentityError> identityErrors = new List<IdentityError>();
-            if (!string.IsNullOrEmpty(updateRequest.NewEmail))
+            if (!string.IsNullOrEmpty(updateData.NewEmail))
             {
-                var token = await userManager.GenerateChangeEmailTokenAsync(user, updateRequest.NewEmail);
-                var result = await userManager.ChangeEmailAsync(user, updateRequest.NewEmail, token);
+                var token = await userManager.GenerateChangeEmailTokenAsync(user, updateData.NewEmail);
+                var result = await userManager.ChangeEmailAsync(user, updateData.NewEmail, token);
                 identityErrors.AddRange(result.Errors);
-                await userManager.SetUserNameAsync(user, updateRequest.NewEmail);
+                await userManager.SetUserNameAsync(user, updateData.NewEmail);
             }
-            if (!string.IsNullOrEmpty(updateRequest.NewPassword))
+            if (!string.IsNullOrEmpty(updateData.NewPassword))
             {
-                var result = await userManager.ChangePasswordAsync(user, updateRequest.OldPassword, updateRequest.NewPassword);
+                var result = await userManager.ChangePasswordAsync(user, updateData.OldPassword, updateData.NewPassword);
                 identityErrors.AddRange(result.Errors);
             }
             return identityErrors;

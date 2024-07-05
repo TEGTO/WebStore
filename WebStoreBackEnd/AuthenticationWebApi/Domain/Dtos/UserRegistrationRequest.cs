@@ -1,4 +1,4 @@
-﻿namespace AuthenticationWebApi.Dtos.ControllerDtos
+﻿namespace AuthenticationWebApi.Domain.Dtos
 {
     public class UserRegistrationRequest
     {

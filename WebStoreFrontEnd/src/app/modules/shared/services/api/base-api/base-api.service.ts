@@ -20,7 +20,7 @@ export class BaseApiService {
     return this.urlDefiner.combineWithAuthApiUrl(path);
   }
   protected combinePathWithWebStoreApiUrl(path: string) {
-    return this.urlDefiner.combineWithWebStorepiUrl(path);
+    return this.urlDefiner.combineWithWebStoreApiUrl(path);
   }
   protected handleError(error: any) {
     let message = this.errorHandler.handleError(error);

@@ -1,11 +1,13 @@
 using AuthenticationManager;
-using AuthenticationManager.Models;
+using AuthenticationManager.Configuration;
 using AuthenticationManager.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Middlewares;
+using RabbitMQ.Configuration;
+using RabbitMQ.RabbitMQ;
 using Shared;
 using WebStoreApi.Data;
 using WebStoreApi.Services;
@@ -16,7 +18,7 @@ var connectionString = builder.Configuration.GetConnectionString("WebStoreConnec
 builder.Services.AddDbContextFactory<WebStoreDbContext>(options =>
     options.UseNpgsql(connectionString));
 
-var jwtSettings = new JwtSettings()
+var jwtSettings = new JwtSettings
 {
     Key = builder.Configuration["JwtSettings:Key"],
     Audience = builder.Configuration["JwtSettings:Audience"],
@@ -24,10 +26,19 @@ var jwtSettings = new JwtSettings()
     ExpiryInMinutes = Convert.ToDouble(builder.Configuration["JwtSettings:ExpiryInMinutes"]),
 };
 builder.Services.AddSingleton(jwtSettings);
-
 builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddCustomJwtAuthentication(jwtSettings);
+
+var rabbitMQFactorySettings = new RabbitMQFactorySettings
+{
+    HostName = builder.Configuration["RabbitMQ:HostName"],
+    Port = Convert.ToInt32(builder.Configuration["RabbitMQ:Port"]),
+    UserName = builder.Configuration["RabbitMQ:UserName"],
+    Password = builder.Configuration["RabbitMQ:Password"],
+};
+builder.Services.AddSingleton(rabbitMQFactorySettings);
+builder.Services.AddSingleton<IRabitMQProducer, RabitMQProducer>();
 
 builder.Services.AddSingleton<IProductsService, ProductsService>();
 builder.Services.AddSingleton<IUserCartService, UserCartService>();

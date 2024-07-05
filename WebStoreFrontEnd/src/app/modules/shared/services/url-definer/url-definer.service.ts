@@ -9,7 +9,7 @@ export class URLDefinerService extends URLDefiner {
   override combineWithAuthApiUrl(subpath: string): string {
     return environment.api + "/auth" + subpath;
   }
-  override combineWithWebStorepiUrl(subpath: string): string {
+  override combineWithWebStoreApiUrl(subpath: string): string {
     return environment.api + "/store" + subpath;
   }
 }

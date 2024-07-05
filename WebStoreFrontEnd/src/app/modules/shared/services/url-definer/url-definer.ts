@@ -5,5 +5,5 @@ import { Injectable } from '@angular/core';
 })
 export abstract class URLDefiner {
   abstract combineWithAuthApiUrl(subpath: string): string;
-  abstract combineWithWebStorepiUrl(subpath: string): string;
+  abstract combineWithWebStoreApiUrl(subpath: string): string;
 }

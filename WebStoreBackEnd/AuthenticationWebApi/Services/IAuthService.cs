@@ -1,6 +1,6 @@
 ﻿using AuthenticationManager.Models;
-using AuthenticationWebApi.Dtos.ServiceDtos;
-using AuthenticationWebApi.Entities;
+using AuthenticationWebApi.Domain.Entities;
+using AuthenticationWebApi.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthenticationWebApi.Services
@@ -10,6 +10,6 @@ namespace AuthenticationWebApi.Services
         public Task<AccessTokenData> LoginUserAsync(string email, string password, int refreshTokeExpiryInDays);
         public Task<AccessTokenData> RefreshToken(AccessTokenData accessTokenData);
         public Task<IdentityResult> RegisterUserAsync(User user, string password);
-        public Task<List<IdentityError>> UpdateUser(UserUpdateServiceRequest updateRequest);
+        public Task<List<IdentityError>> UpdateUser(UserUpdateData updateData);
     }
 }

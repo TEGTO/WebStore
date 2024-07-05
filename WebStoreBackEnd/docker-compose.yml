@@ -1,6 +1,17 @@
 version: '3.4'
 
 services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "user1"
+      RABBITMQ_DEFAULT_PASS: "12345"
+    networks:
+      - backend-net
   db:
     container_name: webstore-db
     image: postgres
@@ -13,8 +24,8 @@ services:
       POSTGRES_PASSWORD: "12345"
     networks:
       - backend-net
-    # volumes:
-    #   - webstore-db:/var/lib/postgresql/data
+    volumes:
+      - webstore-db:/var/lib/postgresql/data
 
   authenticationwebapi:
     container_name: authenticationwebapi
@@ -26,6 +37,7 @@ services:
       - backend-net
     depends_on:
     - db
+    - rabbitmq
 
   webstoreapi:
     container_name: webstoreapi
@@ -37,6 +49,7 @@ services:
       - backend-net
     depends_on:
     - db
+    - rabbitmq
 
   apigateway:
     container_name: apigateway
@@ -55,5 +68,5 @@ services:
 networks:
   backend-net:
 
-# volumes:
-#   webstore-db:
+volumes:
+  webstore-db:

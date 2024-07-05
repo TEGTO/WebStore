@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AuthenticationManager\AuthenticationManager.csproj" />
+    <ProjectReference Include="..\RabbitMQ\RabbitMQ.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 </Project>

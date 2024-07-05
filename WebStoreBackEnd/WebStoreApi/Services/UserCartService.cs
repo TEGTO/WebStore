@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shared.Services;
 using WebStoreApi.Data;
-using WebStoreApi.Dtos.ServiceDtos;
-using WebStoreApi.Entities;
+using WebStoreApi.Domain.Entities;
+using WebStoreApi.Domain.Models;
 
 namespace WebStoreApi.Services
 {
@@ -34,25 +34,25 @@ namespace WebStoreApi.Services
             }
             return amount;
         }
-        public async Task AddProductToUserCartAsync(UserCartChangeServiceRequest changeRequest, CancellationToken cancellationToken)
+        public async Task AddProductToUserCartAsync(UserCartChange changeData, CancellationToken cancellationToken)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
-                for (int i = 0; i < changeRequest.Amount; i++)
+                for (int i = 0; i < changeData.Amount; i++)
                 {
-                    UserProduct userProduct = new UserProduct() { UserEmail = changeRequest.UserEmail, ProductId = changeRequest.ProductId };
+                    UserProduct userProduct = new UserProduct() { UserEmail = changeData.UserEmail, ProductId = changeData.ProductId };
                     dbContext.Add(userProduct);
                 }
                 await dbContext.SaveChangesAsync(cancellationToken);
             }
         }
-        public async Task RemoveProductFromUserCartAsync(UserCartChangeServiceRequest changeRequest, CancellationToken cancellationToken)
+        public async Task RemoveProductFromUserCartAsync(UserCartChange changeData, CancellationToken cancellationToken)
         {
             using (var dbContext = await CreateDbContextAsync(cancellationToken))
             {
                 var userProducts = await dbContext.UserProducts
-                    .Where(x => x.UserEmail == changeRequest.UserEmail && x.ProductId == changeRequest.ProductId)
-                    .Take(changeRequest.Amount)
+                    .Where(x => x.UserEmail == changeData.UserEmail && x.ProductId == changeData.ProductId)
+                    .Take(changeData.Amount)
                     .ToListAsync(cancellationToken);
                 foreach (var userProduct in userProducts)
                 {

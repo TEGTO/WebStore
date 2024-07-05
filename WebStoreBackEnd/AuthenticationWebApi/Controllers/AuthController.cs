@@ -1,7 +1,7 @@
 ﻿using AuthenticationManager.Models;
-using AuthenticationWebApi.Dtos.ControllerDtos;
-using AuthenticationWebApi.Dtos.ServiceDtos;
-using AuthenticationWebApi.Entities;
+using AuthenticationWebApi.Domain.Dtos;
+using AuthenticationWebApi.Domain.Entities;
+using AuthenticationWebApi.Domain.Models;
 using AuthenticationWebApi.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -51,7 +51,7 @@ namespace AuthenticationWebApi.Controllers
         [Authorize]
         public async Task<IActionResult> Update([FromBody] UserUpdateDataRequest updateRequest)
         {
-            UserUpdateServiceRequest serviceUpdateRequest = mapper.Map<UserUpdateServiceRequest>(updateRequest);
+            UserUpdateData serviceUpdateRequest = mapper.Map<UserUpdateData>(updateRequest);
             var identityErrors = await authService.UpdateUser(serviceUpdateRequest);
             if (identityErrors.Count > 0)
             {

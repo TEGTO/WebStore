@@ -1,4 +1,4 @@
-﻿using AuthenticationWebApi.Dtos.ControllerDtos;
+﻿using AuthenticationWebApi.Domain.Dtos;
 using FluentValidation;
 
 namespace AuthenticationWebApi.Validators
