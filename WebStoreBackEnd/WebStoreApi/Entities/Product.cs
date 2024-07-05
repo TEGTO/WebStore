@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebStoreApi.Models
+namespace WebStoreApi.Entities
 {
     public class Product
     {

@@ -1,6 +1,6 @@
-﻿namespace WebStoreApi.Models.Dto
+﻿namespace WebStoreApi.Dtos.ServiceDtos
 {
-    public class UserCartChangeRequest
+    public class UserCartChangeServiceRequest
     {
         public string UserEmail { get; set; }
         public int ProductId { get; set; }

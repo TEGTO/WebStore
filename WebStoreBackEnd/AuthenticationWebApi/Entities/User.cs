@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace AuthenticationWebApi.Models
+namespace AuthenticationWebApi.Entities
 {
     [Index(nameof(Email), IsUnique = true)]
     public class User : IdentityUser

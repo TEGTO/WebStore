@@ -1,4 +1,4 @@
-﻿using WebStoreApi.Models;
+﻿using WebStoreApi.Entities;
 
 namespace WebStoreApi.Services
 {

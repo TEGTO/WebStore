@@ -1,4 +1,4 @@
-﻿namespace WebStoreApi.Models.Dto
+﻿namespace WebStoreApi.Dtos.ControllerDtos
 {
     public class ProductResponse
     {

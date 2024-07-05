@@ -1,5 +1,5 @@
-﻿using FluentValidation;
-using AuthenticationWebApi.Models.Dto;
+﻿using AuthenticationWebApi.Dtos.ControllerDtos;
+using FluentValidation;
 
 namespace AuthenticationWebApi.Validators
 {

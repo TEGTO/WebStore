@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using WebStoreApi.Models.Dto;
+using WebStoreApi.Dtos.ControllerDtos;
 
 namespace AuthenticationWebApi.Validators
 {

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Middlewares.Contracts;
+using Shared.Dtos;
 using System.Net;
 
 namespace Middlewares

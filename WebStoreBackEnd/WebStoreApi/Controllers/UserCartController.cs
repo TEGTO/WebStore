@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebStoreApi.Models;
-using WebStoreApi.Models.Dto;
+using WebStoreApi.Dtos.ControllerDtos;
+using WebStoreApi.Dtos.ServiceDtos;
+using WebStoreApi.Entities;
 using WebStoreApi.Services;
 
 namespace WebStoreApi.Controllers
@@ -38,14 +39,14 @@ namespace WebStoreApi.Controllers
         [HttpPost]
         public async Task<IActionResult> AddProductToUserCart([FromBody] UserCartChangeRequest cartChangeDto, CancellationToken cancellationToken)
         {
-            UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
+            UserCartChangeServiceRequest cartChange = mapper.Map<UserCartChangeServiceRequest>(cartChangeDto);
             await userCartService.AddProductToUserCartAsync(cartChange, cancellationToken);
             return Ok();
         }
         [HttpPut]
         public async Task<IActionResult> RemoveProductFromUserCart([FromBody] UserCartChangeRequest cartChangeDto, CancellationToken cancellationToken)
         {
-            UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
+            UserCartChangeServiceRequest cartChange = mapper.Map<UserCartChangeServiceRequest>(cartChangeDto);
             await userCartService.RemoveProductFromUserCartAsync(cartChange, cancellationToken);
             return Ok();
         }

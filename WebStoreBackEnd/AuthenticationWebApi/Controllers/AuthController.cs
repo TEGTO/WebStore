@@ -1,11 +1,12 @@
 ﻿using AuthenticationManager.Models;
-using AuthenticationWebApi.Models;
-using AuthenticationWebApi.Models.Dto;
+using AuthenticationWebApi.Dtos.ControllerDtos;
+using AuthenticationWebApi.Dtos.ServiceDtos;
+using AuthenticationWebApi.Entities;
 using AuthenticationWebApi.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Middlewares.Contracts;
+using Shared.Dtos;
 using System.Net;
 
 namespace AuthenticationWebApi.Controllers
@@ -24,12 +25,12 @@ namespace AuthenticationWebApi.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserRegistrationRequest userRegistrationRequest)
+        public async Task<IActionResult> Register([FromBody] UserRegistrationRequest registrationRequest)
         {
-            if (userRegistrationRequest == null)
+            if (registrationRequest == null)
                 return BadRequest("Invalid client request");
-            var user = mapper.Map<User>(userRegistrationRequest);
-            var result = await authService.RegisterUserAsync(user, userRegistrationRequest.Password);
+            var user = mapper.Map<User>(registrationRequest);
+            var result = await authService.RegisterUserAsync(user, registrationRequest.Password);
             if (!result.Succeeded)
             {
                 var errors = result.Errors.Where(e => !e.Description.Contains("Username")).Select(e => e.Description).ToArray();
@@ -38,20 +39,20 @@ namespace AuthenticationWebApi.Controllers
             return Created();
         }
         [HttpPost("login")]
-        public async Task<ActionResult<AccessTokenDto>> Login([FromBody] UserAuthenticationRequest loginModel)
+        public async Task<ActionResult<AccessTokenDto>> Login([FromBody] UserAuthenticationRequest authRequest)
         {
             int expiryInDays = 7; //Hardcode, because i'm lazy and it's only a test project 
-            var token = await authService.LoginUserAsync(loginModel.Email, loginModel.Password, expiryInDays);
+            var token = await authService.LoginUserAsync(authRequest.Email, authRequest.Password, expiryInDays);
             var tokenDto = mapper.Map<AccessTokenDto>(token);
             tokenDto.RefreshTokenExpiryDate = DateTime.UtcNow.AddDays(expiryInDays);
             return Ok(tokenDto);
         }
         [HttpPut("update")]
         [Authorize]
-        public async Task<IActionResult> Update([FromBody] UserUpdateDataRequest updateModel)
+        public async Task<IActionResult> Update([FromBody] UserUpdateDataRequest updateRequest)
         {
-            UserDataUpdate userDataUpdate = mapper.Map<UserDataUpdate>(updateModel);
-            var identityErrors = await authService.UpdateUser(userDataUpdate);
+            UserUpdateServiceRequest serviceUpdateRequest = mapper.Map<UserUpdateServiceRequest>(updateRequest);
+            var identityErrors = await authService.UpdateUser(serviceUpdateRequest);
             if (identityErrors.Count > 0)
             {
                 var errors = identityErrors.Where(e => !e.Description.Contains("Username")).Select(e => e.Description).ToArray();
@@ -64,7 +65,7 @@ namespace AuthenticationWebApi.Controllers
         {
             AccessTokenData accessToken = mapper.Map<AccessTokenData>(accessTokenDto);
             var newToken = await authService.RefreshToken(accessToken);
-            return Ok(newToken);
+            return Ok(mapper.Map<AccessTokenDto>(newToken));
         }
     }
 }

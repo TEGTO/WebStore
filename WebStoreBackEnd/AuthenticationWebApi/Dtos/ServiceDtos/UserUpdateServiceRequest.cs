@@ -1,6 +1,6 @@
-﻿namespace AuthenticationWebApi.Models
+﻿namespace AuthenticationWebApi.Dtos.ServiceDtos
 {
-    public class UserDataUpdate
+    public class UserUpdateServiceRequest
     {
         public string? OldEmail { get; set; }
         public string? NewEmail { get; set; }

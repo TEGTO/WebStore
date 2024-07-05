@@ -1,4 +1,4 @@
-﻿namespace AuthenticationWebApi.Models.Dto
+﻿namespace AuthenticationWebApi.Dtos.ControllerDtos
 {
     public class UserAuthenticationRequest
     {

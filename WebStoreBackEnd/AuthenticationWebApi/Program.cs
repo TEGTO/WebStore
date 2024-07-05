@@ -2,7 +2,7 @@ using AuthenticationManager;
 using AuthenticationManager.Models;
 using AuthenticationManager.Services;
 using AuthenticationWebApi.Data;
-using AuthenticationWebApi.Models;
+using AuthenticationWebApi.Entities;
 using AuthenticationWebApi.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;

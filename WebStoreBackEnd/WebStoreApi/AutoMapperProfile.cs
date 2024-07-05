@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using WebStoreApi.Models;
-using WebStoreApi.Models.Dto;
+using WebStoreApi.Dtos.ControllerDtos;
+using WebStoreApi.Dtos.ServiceDtos;
+using WebStoreApi.Entities;
 
 namespace AuthenticationWebApi
 {
@@ -10,8 +11,8 @@ namespace AuthenticationWebApi
         {
             CreateMap<Product, ProductResponse>();
             CreateMap<ProductResponse, Product>();
-            CreateMap<UserCartChange, UserCartChangeRequest>();
-            CreateMap<UserCartChangeRequest, UserCartChange>();
+            CreateMap<UserCartChangeServiceRequest, UserCartChangeRequest>();
+            CreateMap<UserCartChangeRequest, UserCartChangeServiceRequest>();
         }
     }
 }

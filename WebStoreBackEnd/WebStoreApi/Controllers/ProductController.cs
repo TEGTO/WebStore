@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebStoreApi.Models;
-using WebStoreApi.Models.Dto;
+using WebStoreApi.Dtos.ControllerDtos;
+using WebStoreApi.Entities;
 using WebStoreApi.Services;
 
 namespace WebStoreApi.Controllers

@@ -1,6 +1,7 @@
 ﻿using AuthenticationManager.Models;
 using AuthenticationManager.Services;
-using AuthenticationWebApi.Models;
+using AuthenticationWebApi.Dtos.ServiceDtos;
+using AuthenticationWebApi.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace AuthenticationWebApi.Services
@@ -33,20 +34,20 @@ namespace AuthenticationWebApi.Services
             await userManager.UpdateAsync(user);
             return token;
         }
-        public async Task<List<IdentityError>> UpdateUser(UserDataUpdate updateModel)
+        public async Task<List<IdentityError>> UpdateUser(UserUpdateServiceRequest updateRequest)
         {
-            var user = await userManager.FindByEmailAsync(updateModel.OldEmail);
+            var user = await userManager.FindByEmailAsync(updateRequest.OldEmail);
             List<IdentityError> identityErrors = new List<IdentityError>();
-            if (!string.IsNullOrEmpty(updateModel.NewEmail))
+            if (!string.IsNullOrEmpty(updateRequest.NewEmail))
             {
-                var token = await userManager.GenerateChangeEmailTokenAsync(user, updateModel.NewEmail);
-                var result = await userManager.ChangeEmailAsync(user, updateModel.NewEmail, token);
+                var token = await userManager.GenerateChangeEmailTokenAsync(user, updateRequest.NewEmail);
+                var result = await userManager.ChangeEmailAsync(user, updateRequest.NewEmail, token);
                 identityErrors.AddRange(result.Errors);
-                await userManager.SetUserNameAsync(user, updateModel.NewEmail);
+                await userManager.SetUserNameAsync(user, updateRequest.NewEmail);
             }
-            if (!string.IsNullOrEmpty(updateModel.NewPassword))
+            if (!string.IsNullOrEmpty(updateRequest.NewPassword))
             {
-                var result = await userManager.ChangePasswordAsync(user, updateModel.OldPassword, updateModel.NewPassword);
+                var result = await userManager.ChangePasswordAsync(user, updateRequest.OldPassword, updateRequest.NewPassword);
                 identityErrors.AddRange(result.Errors);
             }
             return identityErrors;

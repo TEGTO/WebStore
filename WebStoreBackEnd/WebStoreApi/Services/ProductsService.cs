@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shared.Services;
 using WebStoreApi.Data;
-using WebStoreApi.Models;
+using WebStoreApi.Entities;
 
 namespace WebStoreApi.Services
 {
