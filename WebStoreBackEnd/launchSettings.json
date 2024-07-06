@@ -6,7 +6,8 @@
       "serviceActions": {
         "authenticationwebapi": "StartDebugging",
         "webstoreapi": "StartDebugging",
-        "apigateway": "StartDebugging"
+        "apigateway": "StartDebugging",
+        "rabbitmqreceiver": "StartDebugging"
       }
     }
   }

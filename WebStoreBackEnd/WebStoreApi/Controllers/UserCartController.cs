@@ -48,7 +48,7 @@ namespace WebStoreApi.Controllers
         {
             UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
             await userCartService.AddProductToUserCartAsync(cartChange, cancellationToken);
-            var sendSettings = GetRabbitMQSendSettings("webstore-addproduct");
+            var sendSettings = GetRabbitMQSendSettings("webstore.usercart.addproduct");
             rabitMQProducer.SendMessage(cartChange, sendSettings);
             return Ok();
         }
@@ -57,17 +57,17 @@ namespace WebStoreApi.Controllers
         {
             UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
             await userCartService.RemoveProductFromUserCartAsync(cartChange, cancellationToken);
-            var sendSettings = GetRabbitMQSendSettings("webstore-removeproduct");
+            var sendSettings = GetRabbitMQSendSettings("webstore.usercart.removeproduct");
+            rabitMQProducer.SendMessage(cartChange, sendSettings);
             return Ok();
         }
-        private RabbitMQSendSettings GetRabbitMQSendSettings(string queueName)
+        private RabbitMQSendSettings GetRabbitMQSendSettings(string routingKey)
         {
             var rabbitMQDefaultSendSettings = new RabbitMQSendSettings
             {
                 ExchangeName = configuration["RabbitMQ:WebStoreExchange"],
-                RoutingKey = configuration["RabbitMQ:RoutingKey"],
-                QueueName = queueName,
-                ExchangeType = ExchangeTypeEnum.Direct,
+                RoutingKey = routingKey,
+                ExchangeType = ExchangeTypeEnum.Topic,
             };
             return rabbitMQDefaultSendSettings;
         }

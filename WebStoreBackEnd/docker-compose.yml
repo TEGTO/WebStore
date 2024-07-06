@@ -2,14 +2,20 @@ version: '3.4'
 
 services:
   rabbitmq:
-    image: rabbitmq:management
     container_name: "rabbitmq"
+    image: rabbitmq:management
     ports:
       - "5672:5672"
       - "15672:15672"
     environment:
       RABBITMQ_DEFAULT_USER: "user1"
       RABBITMQ_DEFAULT_PASS: "12345"
+    healthcheck:
+        test: rabbitmq-diagnostics -q ping
+        interval: 5s
+        timeout: 5s
+        retries: 5
+        start_period: 5s
     networks:
       - backend-net
   db:
@@ -64,6 +70,18 @@ services:
     depends_on:
     - authenticationwebapi
     - webstoreapi
+
+  rabbitmqreceiver:
+    container_name: rabbitmqreceiver
+    image: ${DOCKER_REGISTRY-}rabbitmqreceiver
+    build:
+      context: .
+      dockerfile: RabbitMQReceiver/Dockerfile
+    networks:
+      - backend-net
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
 
 networks:
   backend-net:
