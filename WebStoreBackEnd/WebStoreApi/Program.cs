@@ -54,7 +54,6 @@ builder.Services.AddFluentValidationClientsideAdapters();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 ValidatorOptions.Global.LanguageManager.Enabled = false;
 
-
 builder.Services.ConfigureCustomInvalidModelStateResponseContollers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -87,6 +86,13 @@ builder.Services.AddSwaggerGen(opt =>
     });
 });
 
+builder.Services.AddOutputCache();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["Redis:ConnectionString"];
+    options.InstanceName = "redis-webstore";
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -98,6 +104,8 @@ if (app.Environment.IsDevelopment())
 app.ConfigureDatabase<WebStoreDbContext>();
 
 app.UseHttpsRedirection();
+
+app.UseOutputCache();
 
 app.UseExceptionMiddleware();
 

@@ -6,12 +6,18 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:8080;
       - ASPNETCORE_HTTP_PORTS=8080
-      - ConnectionStrings__WebStoreConnection=${CONNECTION_STRINGS_WEB_STORE}
-      - EFCreateDatabase=${EF_CREATE_DB}
-      - JwtSettings__Key=${JWTSETTINGS_KEY}
-      - JwtSettings__Issuer=${JWTSETTINGS_ISSUER}
-      - JwtSettings__ExpiryInMinutes=${JWTSETTINGS_EXPIRY_IN_MINUTES}
-      - JwtSettings__Audience=${JWTSETTINGS_AUDIENCE}
+      - ConnectionStrings__WebStoreConnection=${ConnectionStrings__WebStoreConnection}
+      - EFCreateDatabase=${EFCreateDatabase}
+      - JwtSettings__Key=${JwtSettings__Key}
+      - JwtSettings__Issuer=${JwtSettings__Issuer}
+      - JwtSettings__ExpiryInMinutes=${JwtSettings__ExpiryInMinutes}
+      - JwtSettings__Audience=${JwtSettings__Audience}
+      - MessageQueue__UserName=${MessageQueue__UserName}
+      - MessageQueue__Port=${MessageQueue__Port}
+      - MessageQueue__Password=${MessageQueue__Password}
+      - MessageQueue__HostName=${MessageQueue__HostName}
+      - MessageQueue__WebStoreExchange=${MessageQueue__WebStoreExchange}
+      - Redis__ConnectionString=${Redis__ConnectionString}
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
@@ -21,12 +27,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:8080;
       - ASPNETCORE_HTTP_PORTS=8080
-      - ConnectionStrings__AuthenticationConnection=${CONNECTION_STRINGS_AUTHENTICATION}
-      - EFCreateDatabase=${EF_CREATE_DB}
-      - JwtSettings__Key=${JWTSETTINGS_KEY}
-      - JwtSettings__Issuer=${JWTSETTINGS_ISSUER}
-      - JwtSettings__ExpiryInMinutes=${JWTSETTINGS_EXPIRY_IN_MINUTES}
-      - JwtSettings__Audience=${JWTSETTINGS_AUDIENCE}
+      - ConnectionStrings__AuthenticationConnection=${ConnectionStrings__AuthenticationConnection}
+      - EFCreateDatabase=${EFCreateDatabase}
+      - JwtSettings__Key=${JwtSettings__Key}
+      - JwtSettings__Issuer=${JwtSettings__Issuer}
+      - JwtSettings__ExpiryInMinutes=${JwtSettings__ExpiryInMinutes}
+      - JwtSettings__Audience=${JwtSettings__Audience}
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro

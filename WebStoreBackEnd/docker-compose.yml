@@ -1,6 +1,17 @@
 version: '3.4'
 
 services:
+  redis:
+    container_name: redis
+    image: redis:latest
+    environment:
+        - REDIS_PASSWORD=12345
+    ports:
+        - "6380:6379"
+    networks:
+      - backend-net
+    volumes:
+        - redisdata:/data
   rabbitmq:
     container_name: "rabbitmq"
     image: rabbitmq:management
@@ -12,10 +23,10 @@ services:
       RABBITMQ_DEFAULT_PASS: "12345"
     healthcheck:
         test: rabbitmq-diagnostics -q ping
-        interval: 5s
-        timeout: 5s
-        retries: 5
-        start_period: 5s
+        interval: 35s
+        timeout: 35s
+        retries: 35
+        start_period: 35s
     networks:
       - backend-net
   db:
@@ -54,6 +65,7 @@ services:
     networks:
       - backend-net
     depends_on:
+    - redis
     - db
     - rabbitmq
 
@@ -87,4 +99,5 @@ networks:
   backend-net:
 
 volumes:
+  redisdata:  
   webstore-db:
