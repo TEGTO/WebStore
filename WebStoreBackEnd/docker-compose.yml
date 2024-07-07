@@ -71,12 +71,12 @@ services:
     - authenticationwebapi
     - webstoreapi
 
-  rabbitmqreceiver:
-    container_name: rabbitmqreceiver
-    image: ${DOCKER_REGISTRY-}rabbitmqreceiver
+  mqreceiver:
+    container_name: mqreceiver
+    image: ${DOCKER_REGISTRY-}mqreceiver
     build:
       context: .
-      dockerfile: RabbitMQReceiver/Dockerfile
+      dockerfile: MessageQueueReceiver/Dockerfile
     networks:
       - backend-net
     depends_on:

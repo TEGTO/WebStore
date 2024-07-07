@@ -3,11 +3,11 @@ using AuthenticationManager.Configuration;
 using AuthenticationManager.Services;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using MessageQueue.Configuration;
+using MessageQueue.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Middlewares;
-using RabbitMQ.Configuration;
-using RabbitMQ.RabbitMQ;
 using Shared;
 using WebStoreApi.Data;
 using WebStoreApi.Services;
@@ -30,15 +30,15 @@ builder.Services.AddAuthorization();
 builder.Services.AddScoped<JwtHandler>();
 builder.Services.AddCustomJwtAuthentication(jwtSettings);
 
-var rabbitMQFactorySettings = new RabbitMQFactorySettings
+var messageQueueFactorySettings = new FactorySettings
 {
-    HostName = builder.Configuration["RabbitMQ:HostName"],
-    Port = Convert.ToInt32(builder.Configuration["RabbitMQ:Port"]),
-    UserName = builder.Configuration["RabbitMQ:UserName"],
-    Password = builder.Configuration["RabbitMQ:Password"],
+    HostName = builder.Configuration["MessageQueue:HostName"],
+    Port = Convert.ToInt32(builder.Configuration["MessageQueue:Port"]),
+    UserName = builder.Configuration["MessageQueue:UserName"],
+    Password = builder.Configuration["MessageQueue:Password"],
 };
-builder.Services.AddSingleton(rabbitMQFactorySettings);
-builder.Services.AddSingleton<IRabitMQProducer, RabitMQProducer>();
+builder.Services.AddSingleton(messageQueueFactorySettings);
+builder.Services.AddSingleton<IMessageQueueService, MessageQueueService>();
 
 builder.Services.AddSingleton<IProductsService, ProductsService>();
 builder.Services.AddSingleton<IUserCartService, UserCartService>();

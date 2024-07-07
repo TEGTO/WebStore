@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using MessageQueue.Configuration;
+using MessageQueue.Enums;
+using MessageQueue.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RabbitMQ.Configuration;
-using RabbitMQ.Enums;
-using RabbitMQ.RabbitMQ;
 using WebStoreApi.Domain.Dtos;
 using WebStoreApi.Domain.Entities;
 using WebStoreApi.Domain.Models;
@@ -19,14 +19,14 @@ namespace WebStoreApi.Controllers
         private readonly IUserCartService userCartService;
         private readonly IMapper mapper;
         private readonly IConfiguration configuration;
-        private readonly IRabitMQProducer rabitMQProducer;
+        private readonly IMessageQueueService messageQueu;
 
-        public UserCartController(IUserCartService userCartService, IMapper mapper, IConfiguration configuration, IRabitMQProducer rabitMQProducer)
+        public UserCartController(IUserCartService userCartService, IMapper mapper, IConfiguration configuration, IMessageQueueService messageQueu)
         {
             this.userCartService = userCartService;
             this.mapper = mapper;
             this.configuration = configuration;
-            this.rabitMQProducer = rabitMQProducer;
+            this.messageQueu = messageQueu;
         }
 
         [HttpGet]
@@ -49,7 +49,7 @@ namespace WebStoreApi.Controllers
             UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
             await userCartService.AddProductToUserCartAsync(cartChange, cancellationToken);
             var sendSettings = GetRabbitMQSendSettings("webstore.usercart.addproduct");
-            rabitMQProducer.SendMessage(cartChange, sendSettings);
+            messageQueu.SendMessage(cartChange, sendSettings);
             return Ok();
         }
         [HttpPut]
@@ -58,16 +58,20 @@ namespace WebStoreApi.Controllers
             UserCartChange cartChange = mapper.Map<UserCartChange>(cartChangeDto);
             await userCartService.RemoveProductFromUserCartAsync(cartChange, cancellationToken);
             var sendSettings = GetRabbitMQSendSettings("webstore.usercart.removeproduct");
-            rabitMQProducer.SendMessage(cartChange, sendSettings);
+            messageQueu.SendMessage(cartChange, sendSettings);
             return Ok();
         }
-        private RabbitMQSendSettings GetRabbitMQSendSettings(string routingKey)
+        private SendSettings GetRabbitMQSendSettings(string routingKey)
         {
-            var rabbitMQDefaultSendSettings = new RabbitMQSendSettings
+            var exchangeSettings = new ExchangeSettings
             {
-                ExchangeName = configuration["RabbitMQ:WebStoreExchange"],
+                Name = configuration["MessageQueue:WebStoreExchange"],
+                Type = ExchangeType.Topic,
+            };
+            var rabbitMQDefaultSendSettings = new SendSettings
+            {
+                ExchangeSettings = exchangeSettings,
                 RoutingKey = routingKey,
-                ExchangeType = ExchangeTypeEnum.Topic,
             };
             return rabbitMQDefaultSendSettings;
         }
